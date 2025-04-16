@@ -5,15 +5,17 @@ import { FaTruck } from "react-icons/fa";
 import { TfiReload } from "react-icons/tfi";
 import { motion } from "framer-motion";
 import { colorMap } from "../../colorMap";
+import { reviewSelectors } from "../../redux-store/slices/review/reviewSlice";
+import { useSelector } from "react-redux";
 function ProductDetail({ product }) {
   const [quantity, setQuantity] = useState(1);
-
+const {selectReviews}=reviewSelectors
+const reviews=useSelector(selectReviews)
   const {
     colorsAvailable: colors,
     sizes,
     name,
     description,
-    reviews,
     discountPercentage,
     price,
     cateogry,
@@ -229,9 +231,13 @@ function ProductInfo({
   cateogry,
   productBrand,
   inStock,
+  
 }) {
-  const discountPrice = price - price * (discountPercentage / 100);
-  const totalReviews = reviews?.length;
+  
+  const discountPrice = price - (price * (discountPercentage / 100));
+  const totalReviewRating=reviews?.reduce((total,review)=> total+review.rating,0);
+  const totalReviews=reviews?.length;
+  const averageRating=Math.ceil(totalReviewRating/totalReviews)
   return (
     <div className="info-product flex flex-col  gap-1 w-[400px] ">
       <p className="text-3xl font-bold ">{name}</p>
@@ -240,13 +246,13 @@ function ProductInfo({
         <div className="flex gap-0.5">
           {Array.from({ length: 5 }).map((_, idx) => {
             return (
-              <IoIosStar size={22} key={idx} className="text-yellow-500" />
+              <IoIosStar size={22} key={idx} className={`${idx<=averageRating?"text-yellow-500":"text-gray-400"}`}  />
             );
           })}
         </div>
 
         <p className="text-zinc-900 font-medium text-xl">
-          ({totalReviews} reviews)
+          ({totalReviews} { totalReviews>1? "reviews":"review"})
         </p>
         {inStock ? (
           <p className="text-green-700 font-medium text-[1rem]">In Stock</p>

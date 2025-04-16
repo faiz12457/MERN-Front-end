@@ -7,7 +7,7 @@ export const registerReview=async(data)=>{
             const res=await api.post("/review/register",data);
             return res.data;
         } catch (error) {
-            throw error.response.data
+            throw error.response.data.message
         }
 
 }

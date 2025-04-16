@@ -71,7 +71,7 @@ const reviewSlice = createSlice({
       })
       .addCase(registerReviewThunk.fulfilled, (state, action) => {
         state.registerReviewStatus = "succeed"; 
-        state.successMsg="Review Saved Successfully"
+        state.successMsg="Review Added"
         state.errors = null;
         
       })
@@ -80,7 +80,25 @@ const reviewSlice = createSlice({
           state.errors = action.error.message;
         state.successMsg = null;
     
-      });
+      }).addCase(getReviewsThunk.pending,(state)=>{
+        state.getReviewsStatus = "loading";
+        state.successMsg = null;
+        state.errors = null;
+      state.reviews=[]
+      }).addCase(getReviewsThunk.fulfilled,(state,action)=>{
+
+        state.getReviewsStatus = "succeed";
+        state.successMsg="Reviews fetched Successfully"
+        state.errors = null;
+        state.reviews=action.payload.reviews;
+
+      }).addCase(getReviewsThunk.rejected,(state,action)=>{
+        state.getReviewsStatus = "failed";
+        state.errors = action.error.message;
+      state.successMsg = null;
+      state.reviews=[];
+
+      })
   },
 });
 

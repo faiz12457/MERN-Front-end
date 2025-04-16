@@ -4,7 +4,7 @@ import ReviewButton from './ReviewButton';
 import ReviewInput from './ReviewInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelectors } from '../../redux-store/slices/user/userSlice';
-import { clearReviewErrors, clearReviewSuccessMsg, registerReviewThunk, resetRating, reviewSelectors } from '../../redux-store/slices/review/reviewSlice';
+import { clearReviewErrors, clearReviewSuccessMsg, getReviewsThunk, registerReviewThunk, resetRating, resetRegisterReviewStatus, reviewSelectors } from '../../redux-store/slices/review/reviewSlice';
 import { useParams } from 'react-router-dom';
 import { Slide, toast } from 'react-toastify';
 
@@ -26,7 +26,9 @@ function WriteReview() {
     const {id}=useParams();
 
    
+
    useEffect(()=>{
+    if(registerReviewStatus==="failed"){
         toast.error(reviewError, {
             position: "top-right",
             autoClose: 1000,
@@ -39,11 +41,13 @@ function WriteReview() {
             transition: Slide,
         })
         dispatch(clearReviewErrors());
+      }
 
       },[reviewError])
 
       useEffect(()=>{
-        toast.success(reviewSuccessMsg, {
+        if(registerReviewStatus==="succeed"){
+        toast.success("Review Added", {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: true,
@@ -54,10 +58,11 @@ function WriteReview() {
             theme: "light",
             transition: Slide,
         })
-
-     dispatch(clearReviewSuccessMsg());
-
-      },[reviewSuccessMsg])
+      
+     dispatch(getReviewsThunk(id));
+     dispatch(resetRegisterReviewStatus());
+    }
+      },[registerReviewStatus])
 
       
       
