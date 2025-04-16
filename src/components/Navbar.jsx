@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
@@ -14,15 +14,23 @@ import {
   useAnimate,
 } from "framer-motion";
 import api from "../../api";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchSingleUser,
   userSelectors,
 } from "../redux-store/slices/user/userSlice";
+import ProfileMenu from "./ProfileMenu";
 function Navbar() {
+  const menuRef=useRef(null)
+  const [openMenu,setIsOpen]=useState(false)
   const navigate = useNavigate();
 
+  function handleMenu(){
+    setIsOpen(!openMenu);
+   
+  }
+  
   const dispatch = useDispatch();
   const { selectUser, selectUserStatus } = userSelectors;
   const user = useSelector(selectUser);
@@ -74,18 +82,43 @@ function Navbar() {
         }}
         className="w-full h-16  bg-white z-50 fixed top-0"
       >
-        <div className="w-[70%]  mx-auto h-full flex items-center justify-between ">
+        <div  className="w-[70%]  cursor-pointer mx-auto h-full flex items-center justify-between ">
+    
+    <NavLink to={'/'}>
           <p className="text-xl text-black tracking-widest font-bold">
             MERN SHOP
           </p>
+          
+          </NavLink>
 
           <div className=" h-10 flex gap-5 items-center  ">
-            <div
-              className="w-10 h-10 bg-[#BDBDBD] rounded-full flex justify-center
-           items-center text-white text-xl"
-            >
-              {user?.username[0]}
-            </div>
+
+          
+
+
+          <div className="relative group">
+  <div
+  ref={menuRef}
+  onClick={handleMenu}
+    className="w-10 h-10 bg-[#BDBDBD] rounded-full flex justify-center
+    items-center text-white text-xl cursor-pointer"
+  >
+    {user?.username[0]}
+    
+  </div>
+  <span
+    className="absolute -bottom-10 mb-2 left-1/2 transform -translate-x-1/2
+      whitespace-nowrap bg-zinc-500 text-zinc-100 scale-0 group-hover:scale-100 transition-all duration-200   text-xs font-medium px-2 py-1 rounded opacity-0
+      group-hover:opacity-100  "
+  >
+    Open settings
+  </span>
+
+  { openMenu ? <ProfileMenu setIsOpen={setIsOpen} handleLogout={handleLogout} menuRef={menuRef} openMenu={openMenu} />:null}
+</div>
+          
+
+
 
             <p className="text-xl">Hey👋, {user?.username}</p>
 
@@ -108,9 +141,7 @@ function Navbar() {
                 <CiMenuFries size={25} className="text-zinc-500" />
               </div>
 
-              <div className="cursor-pointer" onClick={handleLogout}>
-                <p>Logout</p>
-              </div>
+              
             </div>
           </div>
         </div>

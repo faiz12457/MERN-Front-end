@@ -38,7 +38,7 @@ export const registerAddressSchema=yup.object().shape({
   street:yup.string().required("Street is required"),
   country:yup.string().required("Country is required"),
   city:yup.string().required("City is required"),
-  postalCode:yup.number().required("Postal Code is required"),
+  postalCode:yup.string().min(6,"Postal Code must be exactly 6 digits").max(6,"Postal Code must be exactly 6 digits").required("Postal Code is required"),
   phoneNumber:yup.number().required("Phone Number is required"),
   province:yup.string().required("State is required"),
   type:yup.string().required("Type is required"),

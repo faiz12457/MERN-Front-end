@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteUserAddress, getUserAddress, registerUserAddress, updateUserAddress } from "./addressApi";
+import {
+  deleteUserAddress,
+  getUserAddress,
+  registerUserAddress,
+  updateUserAddress,
+} from "./addressApi";
 
 const initialState = {
   status: "idle",
@@ -47,8 +52,12 @@ const addressSlice = createSlice({
     resetAddressStatus: (state) => {
       state.status = "idle";
     },
-    resetAddressErrors:(state)=>{
-      state.errors=null
+    resetAddressErrors: (state) => {
+      state.errors = null;
+    },
+
+    resetAddressSuccessMessage: (state) => {
+      state.successMessage = null;
     },
     resetAddressAddStatus: (state) => {
       state.addressAddStatus = "idle";
@@ -76,18 +85,18 @@ const addressSlice = createSlice({
         state.status = "failed";
         state.errors = action.error.message;
         state.successMessage = null;
-        state.address=null
+        state.address = null;
       })
       .addCase(updateUserAddressThunk.pending, (state) => {
         state.addressUpdateStatus = "loading";
       })
-      .addCase(updateUserAddressThunk.fulfilled, (state,action) => {
-        state.successMessage = "Address updated successfully",
-          state.errors = null;
-          state.address = action.payload;
-          state.addressUpdateStatus="succeed";
+      .addCase(updateUserAddressThunk.fulfilled, (state, action) => {
+        (state.successMessage = "Address updated successfully"),
+          (state.errors = null);
+        state.address = action.payload;
+        state.addressUpdateStatus = "succeed";
       })
-      .addCase(updateUserAddressThunk.rejected, (state,action) => {
+      .addCase(updateUserAddressThunk.rejected, (state, action) => {
         state.addressUpdateStatus = "failed";
         state.errors = action.error.message;
         state.successMessage = null;
@@ -95,13 +104,13 @@ const addressSlice = createSlice({
       .addCase(registerUserAddressThunk.pending, (state) => {
         state.addressAddStatus = "loading";
       })
-      .addCase(registerUserAddressThunk.fulfilled, (state,action) => {
+      .addCase(registerUserAddressThunk.fulfilled, (state, action) => {
         state.successMessage = "Address added successfully";
         state.errors = null;
         state.address = action.payload;
-        state.addressAddStatus="succeed";
+        state.addressAddStatus = "succeed";
       })
-      .addCase(registerUserAddressThunk.rejected, (state,action) => {
+      .addCase(registerUserAddressThunk.rejected, (state, action) => {
         state.addressAddStatus = "failed";
         state.errors = action.error.message;
         state.successMessage = null;
@@ -112,10 +121,10 @@ const addressSlice = createSlice({
       .addCase(deleteUserAddressThunk.fulfilled, (state) => {
         state.successMessage = "Address deleted successfully";
         state.errors = null;
-        state.address =null;
-        state.addressDeleteStatus="succeed";
+        state.address = null;
+        state.addressDeleteStatus = "succeed";
       })
-      .addCase(deleteUserAddressThunk.rejected, (state,action) => {
+      .addCase(deleteUserAddressThunk.rejected, (state, action) => {
         state.addressDeleteStatus = "failed";
         state.errors = action.error.message;
         state.successMessage = null;
@@ -139,6 +148,7 @@ export const {
   resetAddressStatus,
   resetAddressUpdateStatus,
   resetAddressErrors,
+  resetAddressSuccessMessage,
 } = addressSlice.actions;
 
 export default addressSlice.reducer;
