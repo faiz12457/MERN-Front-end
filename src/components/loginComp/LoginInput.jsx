@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion, AnimatePresence, useInView, useScroll, useSpring, useTransform, spring } from "framer-motion";
+import { motion } from "framer-motion";
 function LoginInput({type="text",placeholder,value,errors,handlechange,handleblur,touched,name}) {
     const [show,setIsShow]=useState(false);
   return (

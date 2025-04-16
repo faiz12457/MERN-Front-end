@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
+import ProfileMenu from "../profileComp/ProfileMenu" 
 import {
   motion,
   AnimatePresence,
@@ -13,14 +14,14 @@ import {
   useMotionValueEvent,
   useAnimate,
 } from "framer-motion";
-import api from "../../api";
+import api from "../../../api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchSingleUser,
   userSelectors,
-} from "../redux-store/slices/user/userSlice";
-import ProfileMenu from "./ProfileMenu";
+} from "../../redux-store/slices/user/userSlice";
+
 function Navbar() {
   const menuRef=useRef(null)
   const [openMenu,setIsOpen]=useState(false)

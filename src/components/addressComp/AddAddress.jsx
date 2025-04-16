@@ -1,31 +1,27 @@
 import React from 'react'
 import { motion} from "framer-motion";
 import { useFormik } from 'formik';
-import { registerAddressSchema } from '../yupSchema/schema';
-import { addressSelectors } from '../redux-store/slices/address/addressSlice';
-import { useSelector } from 'react-redux';
-
-export function UpdateAddress({setFalse,handleUpdateAddress}) {
-
-    const {selectUserAddress}=addressSelectors
-    const address=useSelector(selectUserAddress);
-    
+import { registerAddressSchema } from '../../yupSchema/schema';
+function AddAddress({setFalse,handleChange:register}) {
     async function onSubmit(values,actions) {
-        handleUpdateAddress(values);
-        setFalse(false);
-
+        const obj={
+            ...values,
+            user:localStorage.getItem("token")
+        }
+            register(obj)
+ actions.resetForm();
+ setFalse(false)
     }
-
   
     const formik = useFormik({
       initialValues: {
-        type:address?.type,
-        city:address?.city,
-        province:address?.province,
-        street:address?.street,
-        phoneNumber:address?.phoneNumber,
-        postalCode:address?.postalCode,
-        country:address?.country,
+        type:"",
+        city: "",
+        province: "",
+        street: "",
+        phoneNumber:"",
+        postalCode:"",
+        country:"",
 
 
       },
@@ -87,7 +83,7 @@ export function UpdateAddress({setFalse,handleUpdateAddress}) {
             }}
              className='w-16 h-9  text-xs font-medium cursor-pointer rounded bg-black text-white uppercase'>
              
-             Update</motion.button>
+             Add</motion.button>
             <motion.button
             onClick={()=>setFalse(false)}
              whileHover={{
@@ -116,6 +112,7 @@ export function UpdateAddress({setFalse,handleUpdateAddress}) {
   )
 }
 
+export default AddAddress
 
 
 

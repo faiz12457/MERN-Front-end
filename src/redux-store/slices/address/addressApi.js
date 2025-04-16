@@ -3,8 +3,10 @@ const token = localStorage.getItem("token");
 export const getUserAddress = async () => {
  
  try {
+    if(token){
      const res = await api.get(`/address/${token}`);
      return res.data;
+    }
  } catch (error) {
     throw error.response.data
     

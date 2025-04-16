@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { userSelectors } from '../redux-store/slices/user/userSlice';
+import { userSelectors } from '../../redux-store/slices/user/userSlice';
 
 function ProfileInfo() {
 const { selectUser } = userSelectors;

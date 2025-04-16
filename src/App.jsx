@@ -1,25 +1,25 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./components/loginComp/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./pages/Home";
+import Home from "./components/homeComp/Home";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
-import Product from "./pages/Products.jsx";
+import Product from "./components/productsComp/Products.jsx";
+
 import Cart from "./pages/Cart.jsx";
 import PlaceOrder from "./pages/PlaceOrder.jsx";
 import Orders from "./pages/Orders.jsx";
-import Register from "./pages/Register.jsx";
-import AppLayout from "./components/AppLayout.jsx";
+import Register from "./components/loginComp/Register.jsx";
+import AppLayout from "./components/AppLayout";
 import GoogleSuccessPage from "./components/GoogleSuccessPage.jsx";
-import ProductDetailPage from "./pages/ProductDetailPage.jsx";
-import Profile from "./pages/Profile.jsx";
+import ProductDetailPage from "./components/productsComp/ProductDetailPage.jsx";
+import Profile from "./components/profileComp/Profile.jsx";
 
 function App() {
   const router = createBrowserRouter([
     {
-      
-      path:"/",
+      path: "/",
       element: <AppLayout />,
       children: [
         {
@@ -27,14 +27,13 @@ function App() {
           element: <ProtectedRoute Component={<Home />} />,
         },
         {
-          path:"/profile",
-          element:<ProtectedRoute Component={<Profile /> } />,
+          path: "/profile",
+          element: <ProtectedRoute Component={<Profile />} />,
         },
         {
-          path:"/product-detail",
-          element:<ProtectedRoute Component={<ProductDetailPage />} />
+          path: "/product-detail/:id",
+          element: <ProtectedRoute Component={<ProductDetailPage />} />,
         },
-        
 
         {
           path: "/about",
@@ -84,7 +83,6 @@ function App() {
   ]);
   return (
     <>
-      
       <RouterProvider router={router} />
     </>
   );

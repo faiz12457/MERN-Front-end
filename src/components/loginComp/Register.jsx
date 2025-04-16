@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import LoginInput from "../components/LoginInput";
-import LoginButton from "../components/LoginButton";
+import LoginInput from "./LoginInput";
+import LoginButton from "./LoginButton";
 import { FcGoogle } from "react-icons/fc";
-import { useFormik } from "formik";
-import api from "../../api";
+import dotenv from "dotenv";
+
 import.meta.env.VITE_BACKEND_URL
+
 import {
   motion,
   AnimatePresence,
@@ -15,60 +16,60 @@ import {
   spring,
 } from "framer-motion";
 import { NavLink, useNavigate } from "react-router-dom";
-import { LoginSchema } from "../yupSchema/schema";
+import { useFormik } from "formik";
+import { SignInSchemea } from "../../yupSchema/schema";
+import api from "../../../api";
 import { Slide, toast } from "react-toastify";
 
-
-function Login() {
-
-const navigate=useNavigate();
-
+function Register() {
+  const navigate=useNavigate();
   useEffect(()=>{
-    const token=localStorage.getItem("token");
-    if(token){
-            navigate("/");
-    }
-
-  },[])
- 
-
- async function onSubmit(values, actions) {
-    try {
-      const res=await api.post("/auth/login",values)
-       if(res.status===200){
-        localStorage.setItem("token",res.data.accessToken);
-        navigate("/");
+      const token=localStorage.getItem("token");
+      if(token){
+              navigate("/");
       }
-       
-
-       actions.resetForm();
-    } catch (error) {
-       
-       toast.error(error.response.data.message, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-        
-        });
-    }
   
-
-    
+    },[])
+ async function onSubmit(values, actions) {
+  
+      try {
+        const res= await api.post("/auth/signup",values);
+      
+        if(res.status===201){
+          localStorage.setItem("token",res.data.accessToken);
+          navigate("/");
+        }
+         
+        actions.resetForm();
+        
+      } catch (error) {
+      
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+          
+          });
+        
+      
+      }
   }
 
   const formik = useFormik({
     initialValues: {
+      Username: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
 
-    validationSchema: LoginSchema,
+    validationSchema: SignInSchemea,
     onSubmit,
   });
 
@@ -76,12 +77,13 @@ const navigate=useNavigate();
     values,
     errors,
     handleChange,
-    handleBlur,
     handleSubmit,
     touched,
+    handleBlur,
     isSubmitting,
   } = formik;
-  const { email, password } = values;
+  const { email, password, Username, confirmPassword } = values;
+
   return (
     <div className="flex w-full h-screen">
       <div className="animation w-1/2 bg-black h-full "></div>
@@ -100,14 +102,24 @@ const navigate=useNavigate();
         <div className="flex flex-col items-center">
           <form className=" p-5 flex flex-col gap-4" onSubmit={handleSubmit}>
             <LoginInput
+              type="text"
+              name={"Username"}
+              placeholder={"Username"}
+              value={Username}
+              handleblur={handleBlur}
+              handlechange={handleChange}
+              touched={touched.Username}
+              errors={errors.Username}
+            />
+            <LoginInput
               type="email"
               name={"email"}
               placeholder={"Email"}
               value={email}
+              handleblur={handleBlur}
+              handlechange={handleChange}
               touched={touched.email}
               errors={errors.email}
-              handlechange={handleChange}
-              handleblur={handleBlur}
             />
             <LoginInput
               type="password"
@@ -119,29 +131,31 @@ const navigate=useNavigate();
               touched={touched.password}
               errors={errors.password}
             />
-            <LoginButton title={"LOGIN"} isSubmitting={isSubmitting} />
+            <LoginInput
+              type="password"
+              name={"confirmPassword"}
+              placeholder={"Confirm Password"}
+              value={confirmPassword}
+              handleblur={handleBlur}
+              handlechange={handleChange}
+              touched={touched.confirmPassword}
+              errors={errors.confirmPassword}
+            />
+            <LoginButton title={"SIGNUP"} isSubmitting={isSubmitting} />
 
-            <div className="flex justify-between text-[1rem]">
-              <motion.a
-                className="cursor-pointer hover:underline"
-                whileHover={{
-                  x: "3px",
-                }}
-              >
-                Forgot Password?
-              </motion.a>
+            <div className="flex justify-end text-[1rem]">
               <motion.p
                 className="cursor-pointer"
                 whileHover={{
                   x: "3px",
                 }}
               >
-                Dont have an account?{" "}
+                Already a member?{" "}
                 <NavLink
-                  to={"/register"}
+                  to={"/login"}
                   className="text-[#DB4444] hover:underline font-medium"
                 >
-                  Register
+                  Login
                 </NavLink>
               </motion.p>
             </div>
@@ -152,12 +166,12 @@ const navigate=useNavigate();
               OR
             </span>
           </div>
-          <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}>
+         <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}>
           <button
             className="mt-7 w-[420px] text-xl justify-center
                items-center gap-1.5 cursor-pointer h-10 flex border py-0.5 border-zinc-300 hover:border-black rounded-sm"
           >
-            <p>Login with</p>
+            <p>Signin with</p>
             <FcGoogle size={25} />
           </button>
           </a>
@@ -169,4 +183,4 @@ const navigate=useNavigate();
   );
 }
 
-export default Login;
+export default Register;

@@ -1,17 +1,21 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 function ProductCard({Product}) {
 
-    const {images,price,name,discountPercentage,productBrand}=Product;
+    const {images,price,name,discountPercentage,productBrand,_id:id}=Product;
+
     const discountPrice = price - (price * (discountPercentage / 100));
   return (
     <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        <a href="#">
+        
             <img src={images[0]} loading='lazy'
                     alt={name} className="h-80 w-72 object-cover rounded-t-xl" />
             <div className="px-4 py-3 w-72">
                 <span className="text-gray-400 mr-3 uppercase text-xs">{productBrand}</span>
-                <p className="text-lg font-bold text-black truncate block capitalize">{name}</p>
+                <NavLink to={`/product-detail/${id}`}>
+                <p className="text-lg font-bold text-black truncate hover:underline block capitalize">{name}</p>
+                </NavLink>
                 <div className="flex items-center">
                     <p className="text-lg font-semibold text-black cursor-auto my-3">${discountPrice.toFixed(2)}</p>
                     <del>
@@ -26,7 +30,7 @@ function ProductCard({Product}) {
                         </svg></div>
                 </div>
             </div>
-        </a>
+        
     </div>
   )
 }

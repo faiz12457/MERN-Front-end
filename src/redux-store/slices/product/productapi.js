@@ -14,3 +14,16 @@ export async function getAllProducts(){
        }
 
   }
+
+
+  export async function getSingleProduct(id) {
+     try {
+          const res=await api.get(`products/details/${id}`);
+          return res.data;
+          
+     } catch (error) {
+          throw error.response.data
+          
+     }
+     
+  }

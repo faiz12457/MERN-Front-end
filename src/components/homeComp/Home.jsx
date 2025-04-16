@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import HomeCarousel from '../components/HomeCarousel'
-import ProductCard from '../components/ProductCard'
-import Pagination from '../components/Panigation'
-import Products from './Products'
+import HomeCarousel from './HomeCarousel'
+
+import Pagination from '../Panigation'
+import Products from '../productsComp/Products'
 
 function Home() {
   

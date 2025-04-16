@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ProfileInfo from "../components/ProfileInfo";
-import AddressInfo from "../components/AddressInfo";
+import ProfileInfo from "./ProfileInfo";
+import AddressInfo from "../addressComp/AddressInfo";
 import { motion } from "framer-motion";
-import AddAddress from "../components/AddAddress";
+import AddAddress from "../addressComp/AddAddress";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addressSelectors,
@@ -13,9 +13,9 @@ import {
   resetAddressErrors,
   resetAddressSuccessMessage,
   updateUserAddressThunk,
-} from "../redux-store/slices/address/addressSlice";
+} from "../../redux-store/slices/address/addressSlice";
 import { Slide, toast } from "react-toastify";
-import { UpdateAddress } from "../components/UpdateAddress";
+import { UpdateAddress } from "../addressComp/UpdateAddress";
 
 function Profile() {
   const [addAddress, setAddAddress] = useState(false);
