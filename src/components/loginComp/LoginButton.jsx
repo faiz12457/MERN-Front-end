@@ -28,21 +28,7 @@ function LoginButton({ title }) {
             className="w-[420px] h-10 relative rounded-sm cursor-pointer font-medium text-center text-white"
         >
             {title}
-            {/* <motion.div
-                variants={{
-                    initial: {
-                        scaleX: 0,
-                        opacity: 0,
-                    },
-                    start: {
-                        opacity: 0.5,
-                        scaleX: "100%",
-                    },
-                }}
-                initial="initial"
-                animate={controls}
-                className="absolute origin-center top-0 left-0 right-0 bottom-0 bg-zinc-100"
-            /> */}
+         
         </motion.button>
     );
 }

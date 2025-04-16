@@ -9,6 +9,7 @@ import {
   resetSingleProductStatus,
 } from "../../redux-store/slices/product/productSlice";
 import Loader from "../../loaders/Loader";
+import Review from "../reviewsComp/Review";
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -31,6 +32,7 @@ function ProductDetailPage() {
   }
 
   return (
+    <>
     <div className="mt-24  w-full   ">
       <div className="w-[80%] mx-auto h-full  box-border flex ">
         <ProductImgSec productImg={product?.images[0]} />
@@ -38,6 +40,8 @@ function ProductDetailPage() {
         <ProductDetail product={product} />
       </div>
     </div>
+   <Review />
+    </>
   );
 }
 
