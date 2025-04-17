@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import StarRating from "./StarRating";
 
-function ReviewInput({ setIsReview,handleChange,handleSubmit,reviewmsg }) {
+function ReviewInput({ setIsReview,handleChange,handleSubmit,reviewmsg,setHover, hover, setRating, rating }) {
   return (
     <div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -19,7 +19,15 @@ function ReviewInput({ setIsReview,handleChange,handleSubmit,reviewmsg }) {
           <p className="text-zinc-950 text-xl">
             How much did you like the product?
           </p>
-          <StarRating  />
+          <StarRating
+            setHover={setHover}
+    hover={hover}
+    setRating={setRating}
+    rating={rating}
+          
+          
+          
+            />
         </div>
 
         <div className="flex gap-2 justify-end">

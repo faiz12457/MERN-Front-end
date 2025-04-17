@@ -246,7 +246,7 @@ function ProductInfo({
         <div className="flex gap-0.5">
           {Array.from({ length: 5 }).map((_, idx) => {
             return (
-              <IoIosStar size={22} key={idx} className={`${idx<=averageRating?"text-yellow-500":"text-gray-400"}`}  />
+              <IoIosStar size={22} key={idx} className={`${idx<averageRating?"text-yellow-500":"text-gray-400"}`}  />
             );
           })}
         </div>

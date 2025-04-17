@@ -4,24 +4,25 @@ import ReviewButton from './ReviewButton';
 import ReviewInput from './ReviewInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelectors } from '../../redux-store/slices/user/userSlice';
-import { clearReviewErrors, clearReviewSuccessMsg, getReviewsThunk, registerReviewThunk, resetRating, resetRegisterReviewStatus, reviewSelectors } from '../../redux-store/slices/review/reviewSlice';
+import { clearReviewErrors, clearReviewSuccessMsg, getReviewsThunk, registerReviewThunk, resetRegisterReviewStatus, reviewSelectors } from '../../redux-store/slices/review/reviewSlice';
 import { useParams } from 'react-router-dom';
 import { Slide, toast } from 'react-toastify';
 
 function WriteReview() {
-
-  const [hover, setHover] = useState(1);
+ const [hover,setHover]=useState(0);
+  const [rating,setRating]=useState(1);
+ ;
   const [reviewmsg, setReviewMsg] = useState("");
   
 
     const [isReview,setIsReview]=useState(false)
  const dispatch=useDispatch();
     const {selectUser}=userSelectors;
-    const {selectReviewRegisterStatus,selectReviewSuccessMsg,selectReviewsErrors,selectRating}=reviewSelectors;
+    const {selectReviewRegisterStatus,selectReviewSuccessMsg,selectReviewsErrors}=reviewSelectors;
     const registerReviewStatus=useSelector(selectReviewRegisterStatus);
     const reviewSuccessMsg=useSelector(selectReviewSuccessMsg);
     const reviewError=useSelector(selectReviewsErrors);
-    const rating=useSelector(selectRating)
+  
     const user=useSelector(selectUser);
     const {id}=useParams();
 
@@ -58,8 +59,6 @@ function WriteReview() {
             theme: "light",
             transition: Slide,
         })
-      
-     dispatch(getReviewsThunk(id));
      dispatch(resetRegisterReviewStatus());
     }
       },[registerReviewStatus])
@@ -90,7 +89,7 @@ function WriteReview() {
       
           setReviewMsg("");
           setIsReview(false);
-          dispatch(resetRating())
+          setRating(1);
           
         }
 
@@ -98,6 +97,10 @@ function WriteReview() {
   return (
     <div>
     {isReview?<ReviewInput 
+    setHover={setHover}
+    hover={hover}
+    setRating={setRating}
+    rating={rating}
      handleSubmit={handleSubmit}
      handleChange={handleChange}
      reviewmsg={reviewmsg}

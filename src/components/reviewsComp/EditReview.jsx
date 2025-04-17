@@ -1,11 +1,14 @@
 import React from 'react'
 import { motion} from "framer-motion";
+import StarRating from './StarRating';
 
-function EditReview({setEdit}) {
+function EditReview({setEdit,editValue,setEditValue,handleUpdate,id,rating}) {
+    
   return (
     <div className='flex flex-col gap-3'>
+    
 
-     <textarea  className='h-28 p-2  w-full border border-zinc-500 rounded'>
+     <textarea  value={editValue} onChange={(e)=>setEditValue(e.target.value)} className='h-28 p-2  w-full border border-zinc-500 rounded'>
 
      </textarea>
 
@@ -13,7 +16,10 @@ function EditReview({setEdit}) {
 
 <div className='flex gap-2.5 justify-end'>
 <motion.button
-            type='submit'
+onClick={()=>{
+    setEdit(false)
+    handleUpdate({id,rating,comment:editValue})}}
+            
              whileHover={{
                 backgroundColor: "#DB4444",
                 scale: 1.02,
@@ -39,7 +45,6 @@ function EditReview({setEdit}) {
              <motion.button
                         onClick={()=>setEdit(false)}
                           whileHover={{
-                 
                              scale: 1.02,
                              transition: {
                                  duration: 0.2,
