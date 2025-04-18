@@ -21,11 +21,18 @@ import {
   fetchSingleUser,
   userSelectors,
 } from "../../redux-store/slices/user/userSlice";
+import { cartSelectors, getCartItemsThunk } from "../../redux-store/slices/cart/cartSlice";
 
 function Navbar() {
   const menuRef=useRef(null)
   const [openMenu,setIsOpen]=useState(false)
   const navigate = useNavigate();
+  const { selectCartItems } = cartSelectors;
+    const items = useSelector(selectCartItems);
+    const token = localStorage.getItem("token");
+      useEffect(() => {
+        dispatch(getCartItemsThunk(token));
+      }, []);
 
   function handleMenu(){
     setIsOpen(!openMenu);
@@ -127,7 +134,7 @@ function Navbar() {
               <div className="relative  w-11 h-11 rounded-full hover:bg-zinc-100 grid place-content-center ">
               <NavLink to={'/cart'}>
                 <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
-                  1
+                  {items.length}
                 </span>
                 <MdOutlineShoppingCart size={28} className="text-zinc-500" />
                 </NavLink>

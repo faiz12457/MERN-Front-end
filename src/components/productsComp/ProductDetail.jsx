@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { IoIosStar } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { FaTruck } from "react-icons/fa";
@@ -6,11 +7,21 @@ import { TfiReload } from "react-icons/tfi";
 import { motion } from "framer-motion";
 import { colorMap } from "../../colorMap";
 import { reviewSelectors } from "../../redux-store/slices/review/reviewSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { userSelectors } from "../../redux-store/slices/user/userSlice";
+import { addCartItemThunk, cartSelectors, resetAddCartStatus } from "../../redux-store/slices/cart/cartSlice";
+import { Slide, toast } from "react-toastify";
 function ProductDetail({ product }) {
+  const {selectCartAddStatus,selectCartItems}=cartSelectors
+  const items=useSelector(selectCartItems)
+  const addToCartStatus=useSelector(selectCartAddStatus);
   const [quantity, setQuantity] = useState(1);
+  const dispatch=useDispatch();
 const {selectReviews}=reviewSelectors
-const reviews=useSelector(selectReviews)
+const reviews=useSelector(selectReviews);
+
+
   const {
     colorsAvailable: colors,
     sizes,
@@ -22,6 +33,28 @@ const reviews=useSelector(selectReviews)
     productBrand,
     inStock,
   } = product || {};
+
+
+  useEffect(()=>{
+    if(addToCartStatus==="succeed"){
+      toast.success("Item added to cart", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+    })
+
+
+ dispatch(resetAddCartStatus());
+
+    }
+
+  },[addToCartStatus])
 
   function handleIncreaseQuantity() {
     if (quantity >= 1) {
@@ -49,8 +82,9 @@ const reviews=useSelector(selectReviews)
           handleDecreseQuantity={handleDecreseQuantity}
           handleIncreaseQuantity={handleIncreaseQuantity}
           quantity={quantity}
-          colors={colors}
-          sizes={sizes}
+          colors={product?.colorsAvailable}
+          sizes={product?.sizes}
+          inStock={product?.inStock}
         />
         <DeliveryInfo />
       </div>
@@ -97,17 +131,51 @@ function DeliveryInfo() {
 }
 
 function ProductsOrderInfo({
+
   colors,
   sizes,
   handleDecreseQuantity,
   handleIncreaseQuantity,
   quantity,
+  inStock
 }) {
+ 
+const {selectUser}=userSelectors
+const dispatch=useDispatch();
+const user=useSelector(selectUser);
+   const defaultColor= colors&& colors[0];
+ const defaultSize=sizes&& sizes[0];
+  const {id}=useParams();
+  const [color,setColor]=useState(defaultColor);
+  const [size,setSize]=useState(defaultSize);
+    
+  function handleColor(color){
+    setColor(color);
+  }
+  function handleSize(s){
+    setSize(s);
+  }
+
+  function handleCart(){
+         const data={
+          quantity,
+          color,
+          size,
+          productId:id,
+          userId:user._id
+         }
+         dispatch(addCartItemThunk(data));
+
+  
+  }
+   
   return (
     <div className="w-[340px]   flex flex-col gap-5">
-      <ProductColors colors={colors} />
-      <ProductSizes sizes={sizes} />
+      <ProductColors colors={colors} handleColor={handleColor} />
+      <ProductSizes sizes={sizes} handleSize={handleSize} />
       <ProductCartButton
+      inStock={inStock}
+           handleCart={handleCart}
         handleDecreseQuantity={handleDecreseQuantity}
         handleIncreaseQuantity={handleIncreaseQuantity}
         quantity={quantity}
@@ -116,8 +184,12 @@ function ProductsOrderInfo({
   );
 }
 
-function ProductSizes({ sizes }) {
-  const [sizeIndex, setSizeIndex] = useState(null);
+function ProductSizes({ sizes,handleSize }) {
+  const [sizeIndex, setSizeIndex] = useState(0);
+  function handleClick(idx,size){
+    setSizeIndex(idx);
+    handleSize(size);
+  }
 
   return (
     <div className="sizes flex items-center gap-4 ">
@@ -125,15 +197,17 @@ function ProductSizes({ sizes }) {
       <div className="flex gap-2">
         {sizes?.map((size, idx) => {
           return (
+          
             <motion.button
-              onClick={() => setSizeIndex(idx)}
+            key={idx}
+              onClick={()=>handleClick(idx,size)}
               whileHover={{
                 scale: 1.05,
               }}
               whileTap={{
                 scale: 1,
               }}
-              key={idx}
+            
               value={size}
               className={`max-w-fit p-1.5  ${
                 idx === sizeIndex
@@ -144,6 +218,7 @@ function ProductSizes({ sizes }) {
             >
               {size}
             </motion.button>
+        
           );
         })}
       </div>
@@ -155,7 +230,16 @@ function ProductCartButton({
   handleDecreseQuantity,
   handleIncreaseQuantity,
   quantity,
-}) {
+  handleCart,
+  inStock
+
+
+  
+})
+
+
+{
+
   return (
     <div className="flex gap-3">
       <div className="flex text-[1.1rem] gap-4 items-center ">
@@ -168,15 +252,37 @@ function ProductCartButton({
         </button>
         <p className="font-medium">{quantity}</p>
         <button
+        disabled={quantity ===20}
           onClick={handleIncreaseQuantity}
-          className="w-10 h-12 rounded-[6px] cursor-pointer bg-black text-2xl font-medium text-white"
+          className="w-10 h-12 rounded-[6px] cursor-pointer disabled:opacity-80 bg-black text-2xl font-medium text-white"
         >
           +
         </button>
       </div>
-      <button className="w-32 h-12 bg-black text-white font-medium rounded-[4px] cursor-pointer">
-        Add To Cart
-      </button>
+    
+ <motion.button
+            onClick={handleCart}
+            disabled={!inStock}
+            whileHover={{
+                backgroundColor: "#DB4444",
+                scale: 1.02,
+                transition: {
+                    duration: 0.3,
+                    ease: "easeInOut",
+                }
+            }}
+            whileTap={{ scale: 1 }}
+            style={{
+                backgroundColor: "#18181b",
+                transition: "backgroundColor 0.2s ease-in-out"
+            }}
+            className="w-32 h-12 disabled:opacity-70 disabled:cursor-not-allowed rounded-[4px] cursor-pointer outline-none font-medium text-center text-white"
+        >
+            Add To Cart
+         
+        </motion.button>
+
+
 
       <button
         className="w-10 h-12 cursor-pointer rounded-[6px] 
@@ -188,8 +294,13 @@ function ProductCartButton({
   );
 }
 
-function ProductColors({ colors }) {
-  const [colorIndex, setColorIndex] = useState();
+function ProductColors({ colors,handleColor }) {
+  const [colorIndex, setColorIndex] = useState(0);
+
+  function handleClick(idx,c){
+    setColorIndex(idx);
+    handleColor(c);
+  }
 
   return (
     <div className="colors flex items-center gap-4">
@@ -198,7 +309,7 @@ function ProductColors({ colors }) {
         {colors?.map((color, index) => {
           return (
             <div
-              onClick={() => setColorIndex(index)}
+              onClick={()=>handleClick(index,color)}
               key={index}
               className={`border p-1 rounded-full flex justify-center items-center ${
                 index === colorIndex ? "border-red-600" : "border-none"
@@ -206,6 +317,7 @@ function ProductColors({ colors }) {
             >
               <button
                 value={color}
+              
                 className={`${
                   color.toLowerCase().includes("white")
                     ? "border-black"

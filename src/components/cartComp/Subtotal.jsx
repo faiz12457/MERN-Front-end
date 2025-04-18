@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion, useAnimationControls } from "framer-motion";
 import { NavLink } from 'react-router-dom';
+import { cartSelectors } from '../../redux-store/slices/cart/cartSlice';
+import { useSelector } from 'react-redux';
 
 function Subtotal() {
+    const { selectCartItems } = cartSelectors;
+      const items = useSelector(selectCartItems);
+      const totalCost=items?.reduce((total,item)=>{
+        const discountPrice =item.product.price - item.product.price * (item.product.discountPercentage / 100)
+         const  finalPrice=discountPrice*item.quantity;
+         return total+=finalPrice;  
+      },0)
   return (
     <div className='flex flex-col gap-4'>
     <div className=' flex items-center bg-white'>
     <div>
     <p className='text-shadow-zinc-950 text-2xl font-medium'>Subtotal</p>
-    <p className='text-black text-xl'>Total items in cart 1</p>
+    <p className='text-black text-xl'>Total items in cart {items.length}</p>
     <p className='text-zinc-700'>Shipping and taxes will be calculated at checkout.</p>
     </div>
-    <p className='ml-auto text-[1.2rem] font-medium text-zinc-950'>$1749</p>
+    <p className='ml-auto text-[1.2rem] font-medium text-zinc-950'>${totalCost.toFixed(0)||0}</p>
     </div>
 
     <div className='flex flex-col items-center gap-4'>

@@ -133,7 +133,8 @@ const cartSlice = createSlice({
         state.addCartStatus = "succeed";
         state.errors = null;
         state.successMessage = "Item added to cart";
-        if (action.payload.message === "Item added successfully") {
+
+        if (action.payload.message ==="added") {
           state.items.push(action.payload.cartItem);
         } else {
           state.items = state.items.map((item) => {

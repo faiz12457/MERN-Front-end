@@ -1,63 +1,96 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { userSelectors } from "../../redux-store/slices/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-function ProductCard({Product}) {
+import { BsBagPlus } from "react-icons/bs";
+import {
+  addCartItemThunk,
+  cartSelectors,
+  resetAddCartStatus,
+} from "../../redux-store/slices/cart/cartSlice";
+import { Slide, toast } from "react-toastify";
+function ProductCard({ Product }) {
+  const { selectUser } = userSelectors;
+  const user = useSelector(selectUser);
+  const { selectCartAddStatus } = cartSelectors;
+  const status = useSelector(selectCartAddStatus);
+  const dispatch = useDispatch();
+  const {
+    images,
+    price,
+    name,
+    discountPercentage,
+    productBrand,
+    _id: id,
+    colorsAvailable,
+    sizes,
+    inStock
+  } = Product;
 
-    const {images,price,name,discountPercentage,productBrand,_id:id}=Product;
+  
+  const discountPrice = price - price * (discountPercentage / 100);
 
-    const discountPrice = price - (price * (discountPercentage / 100));
+  function handleCart() {
+    if(inStock){
+    const data = {
+      quantity: 1,
+      color: colorsAvailable[0],
+      size: sizes[0],
+      productId: id,
+      userId: user._id,
+    };
+    dispatch(addCartItemThunk(data));
+  }
+  else{
+     toast.error("Out of stock", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        })
+    
+  }
+  }
+
   return (
     <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-        
-            <img src={images[0]} loading='lazy'
-                    alt={name} className="h-80 w-72 object-cover rounded-t-xl" />
-            <div className="px-4 py-3 w-72">
-                <span className="text-gray-400 mr-3 uppercase text-xs">{productBrand}</span>
-                <NavLink to={`/product-detail/${id}`}>
-                <p className="text-lg font-bold text-black truncate hover:underline block capitalize">{name}</p>
-                </NavLink>
-                <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">${discountPrice.toFixed(2)}</p>
-                    <del>
-                       {discountPercentage>0 && <p className="text-sm text-gray-600 cursor-auto ml-2">${price}</p>}
-                    </del>
-                    <div className="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                            <path fillRule="evenodd"
-                                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg></div>
-                </div>
-            </div>
-        
+      <img
+        src={images[0]}
+        loading="lazy"
+        alt={name}
+        className="h-80 w-72 object-cover rounded-t-xl"
+      />
+      <div className="px-4 py-3 w-72">
+        <span className="text-gray-400 mr-3 uppercase text-xs">
+          {productBrand}
+        </span>
+        <NavLink to={`/product-detail/${id}`}>
+          <p className="text-lg font-bold text-black truncate hover:underline block capitalize">
+            {name}
+          </p>
+        </NavLink>
+        <div className="flex items-center">
+          <p className="text-lg font-semibold text-black cursor-auto my-3">
+            ${discountPrice.toFixed(2)}
+          </p>
+          <del>
+            {discountPercentage > 0 && (
+              <p className="text-sm text-gray-600 cursor-auto ml-2">${price}</p>
+            )}
+          </del>
+          <div className="ml-auto cursor-pointer" onClick={handleCart}>
+            <BsBagPlus size={20} className="text-current " />
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ProductCard
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default ProductCard;
