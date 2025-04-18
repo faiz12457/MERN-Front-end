@@ -5,13 +5,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { userSelectors } from "../../redux-store/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewModal from "./ReviewModel";
-import {
-  deleteReviewThunk,
-  getReviewsThunk,
-  reviewSelectors,
-  updateReviewThunk,
-} from "../../redux-store/slices/review/reviewSlice";
-import { useParams } from "react-router-dom";
 import StarRating from "./StarRating";
 
 function ReviewCard({ review, handleDeleteReview,handleUpdate }) {

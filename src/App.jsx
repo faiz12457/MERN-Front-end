@@ -7,9 +7,9 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Product from "./components/productsComp/Products.jsx";
 
-import Cart from "./pages/Cart.jsx";
-import PlaceOrder from "./pages/PlaceOrder.jsx";
-import Orders from "./pages/Orders.jsx";
+import Cart from "./components/cartComp/Cart.jsx";
+import PlaceOrder from "./components/ordersComp/PlaceOrder.jsx";
+import Orders from "./components/ordersComp/Orders.jsx";
 import Register from "./components/loginComp/Register.jsx";
 import AppLayout from "./components/AppLayout";
 import GoogleSuccessPage from "./components/GoogleSuccessPage.jsx";

@@ -124,15 +124,17 @@ function Navbar() {
             <p className="text-xl">Hey👋, {user?.username}</p>
 
             <div className="flex gap-6 h-full items-center">
-              <div className="relative ">
-                <span className="absolute w-5 h-5 -top-2.5 -right-2.5 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
+              <div className="relative  w-11 h-11 rounded-full hover:bg-zinc-100 grid place-content-center ">
+              <NavLink to={'/cart'}>
+                <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
                   1
                 </span>
                 <MdOutlineShoppingCart size={28} className="text-zinc-500" />
+                </NavLink>
               </div>
 
-              <div className="relative">
-                <span className="absolute w-5 h-5 -top-3 -right-2.5 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
+              <div className="relative w-11 h-11 rounded-full grid place-content-center hover:bg-zinc-100">
+                <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
                   1
                 </span>
                 <FaRegHeart size={25} className="text-zinc-500" />

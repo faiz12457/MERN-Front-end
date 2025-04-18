@@ -20,6 +20,10 @@ function ProductDetailPage() {
   const product = useSelector(selectSingleProduct);
 
   useEffect(() => {
+    window.scrollTo({
+      top:0,
+      behavior:"auto",
+    })
     dispatch(fetchSingleProduct(id));
   }, []);
 
