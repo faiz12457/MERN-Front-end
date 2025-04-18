@@ -17,7 +17,7 @@ const initialState = {
   updateReviewStatus: "idle",
   successMsg: null,
   errors: null,
-  rating:2,
+  
 };
 
 export const registerReviewThunk = createAsyncThunk(

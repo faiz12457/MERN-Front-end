@@ -3,6 +3,7 @@ import  productSlice  from './slices/product/productSlice.js'
 import userSlice from "./slices/user/userSlice.js"
 import addressSlice from "./slices/address/addressSlice.js"
 import reviewSlice from "./slices/review/reviewSlice.js"
+import cartSlice from "./slices/cart/cartSlice.js"
 
 
 
@@ -17,6 +18,7 @@ export const store=configureStore({
         userSlice,
         addressSlice,
         reviewSlice,
+        cartSlice,
         
     },
 
