@@ -1,12 +1,8 @@
 import React from 'react'
-import { motion, useAnimationControls } from "framer-motion";
+import { motion } from "framer-motion";
 
 function LoginButton({ title }) {
-    const controls = useAnimationControls();
-
-    function handleEffect() {
-        controls.start("start");
-    }
+    
 
     return (
         <motion.button

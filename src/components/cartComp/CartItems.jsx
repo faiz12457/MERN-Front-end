@@ -20,9 +20,9 @@ function CartItems() {
   const items = useSelector(selectCartItems);
   const updateStatus=useSelector(selectCartUpdateStatus)
   
-  useEffect(()=>{
-       console.log(updateStatus)
-  },[updateStatus])
+  // useEffect(()=>{
+  //      console.log(updateStatus)
+  // },[updateStatus])
 
 
 

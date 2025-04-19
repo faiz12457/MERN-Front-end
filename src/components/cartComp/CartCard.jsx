@@ -16,9 +16,7 @@ export default function CartCard({ item }) {
   const dispatch = useDispatch();
   const [uQuantity, setQuantity] = useState(quantity);
 
-  // useEffect(()=>{
-  //      console.log(updateStatus)
-  // },[updateStatus])
+ 
 
   function handleIncreseQuantity() {
     if (uQuantity > 0) {

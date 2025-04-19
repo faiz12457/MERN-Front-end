@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { motion, useAnimationControls } from "framer-motion";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { cartSelectors } from '../../redux-store/slices/cart/cartSlice';
 import { useSelector } from 'react-redux';
 
@@ -50,8 +50,15 @@ function ContinueShoppingBtn(){
 
 
 function CheckOutBtn({title}){
+
+    const navigate=useNavigate();
+    function handleNavigate(){
+        navigate("/checkout")
+    }
     return (
+        
         <motion.button
+        onClick={handleNavigate}
         whileHover={{
             backgroundColor: "#DB4444",
             scale: 1.02,
@@ -67,8 +74,10 @@ function CheckOutBtn({title}){
         }}
         className="w-full h-10 relative rounded-sm cursor-pointer font-medium text-center text-white"
     >
-        {title}
+    {title}
+      
      
     </motion.button>
+    
     )
 }
