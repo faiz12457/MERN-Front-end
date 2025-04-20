@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { addressSelectors } from '../../redux-store/slices/address/addressSlice';
 import Loader from '../../loaders/Loader';
 import { userSelectors } from '../../redux-store/slices/user/userSlice';
+import { cartSelectors } from '../../redux-store/slices/cart/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Checkout() {
   
@@ -12,7 +14,16 @@ function Checkout() {
   const addressStatus = useSelector(selectAddressStatus)
   const {selectUserStatus}=userSelectors
   const userStatus=useSelector(selectUserStatus);
+  const {selectCartItems}=cartSelectors
+  const items=useSelector(selectCartItems);
+  const navigate=useNavigate();
 
+  // useEffect(() => {
+  //   if (items.length === 0) {
+  //     navigate("/");
+  //   }
+  // }, [items, navigate]);
+  
  
    if (addressStatus === "loading" || userStatus==="loading") {
       return (

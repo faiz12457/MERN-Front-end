@@ -14,6 +14,7 @@ import GoogleSuccessPage from "./components/GoogleSuccessPage.jsx";
 import ProductDetailPage from "./components/productsComp/ProductDetailPage.jsx";
 import Profile from "./components/profileComp/Profile.jsx";
 import Checkout from "./components/checkoutComp/Checkout.jsx";
+import OrderSuccess from "./components/ordersComp/OrderSuccess.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -62,6 +63,11 @@ function App() {
           path: "/checkout",
           element: <ProtectedRoute Component={<Checkout />} />,
         },
+
+        {
+          path:'/order-success/:id',
+          element:<ProtectedRoute Component={<OrderSuccess />} />
+        }
       ],
     },
 

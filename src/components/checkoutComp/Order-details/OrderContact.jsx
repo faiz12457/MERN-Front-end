@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { Input } from "./Input";
 import { Title } from "./Title";
@@ -14,6 +14,17 @@ import {
   resetAddressStatus,
 } from "../../../redux-store/slices/address/addressSlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  cartSelectors,
+  deleteAllCartThunk,
+  resetCartItems,
+} from "../../../redux-store/slices/cart/cartSlice";
+import {
+  createOrderThunk,
+  orderSelectors,
+  resetCreateOrderStatus,
+} from "../../../redux-store/slices/order/orderSlice";
+import { useNavigate } from "react-router-dom";
 
 function OrderContact() {
   const dispatch = useDispatch();
@@ -23,6 +34,17 @@ function OrderContact() {
   const userStatus = useSelector(selectUserStatus);
   const address = useSelector(selectUserAddress);
   const addressStatus = useSelector(selectAddressStatus);
+  const { _id: userId } = user || {};
+  const { selectCartItems, selectDeleteAllCartItemStatus } = cartSelectors;
+  const cartItems = useSelector(selectCartItems);
+
+  const { selectOrderId, selectCreateOrderStatus } = orderSelectors;
+  const orderId = useSelector(selectOrderId);
+  const orderStatus = useSelector(selectCreateOrderStatus);
+  const [status, setStatus] = useState(false);
+  const navigate = useNavigate();
+
+  const deleteStatus = useSelector(selectDeleteAllCartItemStatus);
 
   useEffect(() => {
     if (addressStatus === "idle") {
@@ -30,8 +52,52 @@ function OrderContact() {
     }
   }, [addressStatus]);
 
+  useEffect(() => {
+    if (orderStatus === "loading") {
+      setStatus(true);
+    }
+
+    if (orderStatus === "succeed") {
+      dispatch(deleteAllCartThunk());
+      dispatch(resetCartItems());
+      navigate(`/order-success/${orderId}`);
+      setStatus(false);
+      dispatch(resetCreateOrderStatus());
+    }
+  }, [orderStatus]);
+
   function onSubmit(values, actions) {
-    console.log(values);
+    const items = cartItems.map((item) => {
+      return {
+        product: item.product._id,
+        quantity: item.quantity,
+        color: item.color,
+        size: item.size,
+      };
+    });
+
+    const total = Math.ceil(
+      cartItems?.reduce((total, item) => {
+        const discountPrice =
+          item.product.price -
+          item.product.price * (item.product.discountPercentage / 100);
+        const finalPrice = discountPrice * item.quantity;
+        return (total += finalPrice);
+      }, 0)
+    );
+    const selected = document.querySelector(
+      'input[name="billing"]:checked'
+    )?.value;
+    const { email, ...address } = values;
+    const order = {
+      items,
+      user: userId,
+      paymentMode: selected,
+      total,
+      address,
+    };
+
+    dispatch(createOrderThunk(order));
   }
 
   const formik = useFormik({

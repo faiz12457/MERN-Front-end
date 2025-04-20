@@ -7,7 +7,7 @@ function LoginButton({ title }) {
     return (
         <motion.button
             type="submit"
-            onClick={handleEffect}
+           
             whileHover={{
                 backgroundColor: "#DB4444",
                 scale: 1.02,

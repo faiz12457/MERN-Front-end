@@ -22,14 +22,14 @@ function Payment() {
 
             <div onClick={()=>setIsOpen(false)} className={`w-full cursor-pointer  h-12 ${isOpen?" border-zinc-300 border border-b-0 rounded-tl-[8px] rounded-tr-[8px]":" border rounded-tl-[8px] rounded-tr-[8px]"} `}>
        
-              <CustomRadio name={'billing'} value={'cod'} checked={true} id={'cod'}  title={'Cash on Delivery (COD)'} />
+              <CustomRadio name={'billing'} value={'COD'} checked={true} id={'cod'}  title={'Cash on Delivery (COD)'} />
 
 
 
             </div>
               <div onClick={()=>setIsOpen(true)} className={`w-full justify-between  flex cursor-pointer  h-12 ${isOpen?"border rounded-bl-[8px] rounded-br-[8px]": "border border-t-0  border-zinc-300 rounded-bl-[8px] rounded-br-[8px]"}`}>
               
-                <CustomRadio name={'billing'} checked={false} value={'card'} id={'card'} title={'PAYFAST(Pay via Debit/Credit/Wallet/Bank Account)'} />
+                <CustomRadio name={'billing'} checked={false} value={'CARD'} id={'card'} title={'PAYFAST(Pay via Debit/Credit/Wallet/Bank Account)'} />
                 
               </div>
               
@@ -54,6 +54,7 @@ function CustomRadio({type="radio",name,value,title,id,checked}){
       name={name}
       value={value}
       id={id}
+  
       
       defaultChecked={checked}
        

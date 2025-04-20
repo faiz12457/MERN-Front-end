@@ -1,5 +1,5 @@
 import api from "../../../../api";
-
+const token=localStorage.getItem("token");
 export const getCartItems = async (id) => {
   try {
     const res = await api.get(`/cart/items/${id}`);
@@ -35,3 +35,16 @@ export const updateCartItem = async (data) => {
     throw error.response.data.message;
   }
 };
+
+
+
+export const deleteAllCart=async()=>{
+  
+  try { 
+    
+     const res=await api.delete(`/cart/deleteAll/${token}`);
+     return res.data
+  } catch (error) {
+    throw error.response.data.message;
+  }
+}

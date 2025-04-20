@@ -4,6 +4,7 @@ import {
   deleteCartItem,
   addCartItem,
   updateCartItem,
+  deleteAllCart,
 } from "./cartApi";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   addCartStatus: "idle",
   successMessage: null,
   errors: null,
+  deleteAllCartStatus: "idle",
 };
 
 export const getCartItemsThunk = createAsyncThunk("/cart/items", async (id) => {
@@ -42,6 +44,11 @@ export const addCartItemThunk = createAsyncThunk("/cart/add", async (data) => {
   return res;
 });
 
+export const deleteAllCartThunk = createAsyncThunk("/delete/all", async () => {
+  const res = await deleteAllCart();
+  return res;
+});
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -67,6 +74,13 @@ const cartSlice = createSlice({
     resetCartErrors: (state) => {
       state.errors = null;
     },
+    resetDeleteAllCartItems:(state)=>{
+      state.deleteAllCartStatus="idle";
+    },
+
+    resetCartItems:(state)=>{
+      state.items=[];
+    }
   },
 
   extraReducers: (builder) => {
@@ -134,7 +148,7 @@ const cartSlice = createSlice({
         state.errors = null;
         state.successMessage = "Item added to cart";
 
-        if (action.payload.message ==="added") {
+        if (action.payload.message === "added") {
           state.items.push(action.payload.cartItem);
         } else {
           state.items = state.items.map((item) => {
@@ -148,11 +162,24 @@ const cartSlice = createSlice({
         state.addCartStatus = "failed";
         state.errors = action.error.message;
         state.successMessage = null;
+      })
+      .addCase(deleteAllCartThunk.pending, (state) => {
+        state.deleteAllCartStatus = "loading";
+      })
+      .addCase(deleteAllCartThunk.fulfilled, (state) => {
+        state.deleteAllCartStatus = "succeed";
+      })
+      .addCase(deleteAllCartThunk.rejected, (state, action) => {
+        state.errors = action.error.message;
+        state.deleteAllCartStatus = "failed";
+  
       });
   },
 });
 
 export const {
+  resetCartItems,
+  resetDeleteAllCartItems,
   resetAddCartStatus,
   resetGetCartStatus,
   resetUpdateCartStatus,
@@ -169,6 +196,7 @@ export const cartSelectors = {
   selectCartSuccessMsg: (state) => state.cartSlice.successMessage,
   selectCartErrors: (state) => state.cartSlice.errors,
   selectCartItems: (state) => state.cartSlice.items,
+  selectDeleteAllCartItemStatus:(state)=>state.cartSlice.deleteAllCartStatus,
 };
 
 export default cartSlice.reducer;
