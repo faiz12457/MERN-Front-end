@@ -4,6 +4,8 @@ import { Input } from "./Input";
 import { Title } from "./Title";
 import PayButton from "./PayButton";
 import { motion, } from "framer-motion";
+import Payment from "./Payment";
+
 
 
 function OrderContact() {
@@ -12,17 +14,18 @@ function OrderContact() {
     }
   return (
     <div className="w-[90%] box-border p-3 h-full mt-[50px] mr-3 ">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         {/* Contact Section */}
         <div className="flex flex-col gap-2.5">
           <Title title={"Contact"} />
 
-          <div className="w-full  border border-zinc-300 rounded-[8px]">
-            <input
+          <div className="w-full  h-12">
+            {/* <input
               type="email"
               className=" py-3 pl-3 outline-none w-full h-full"
               placeholder="Email"
-            />
+            /> */}
+            <Input type={'text'} name={'email'}  placeholder={'Email'} className="" />
           </div>
           <CustomCheckbox text={"Email me with news and offers"} />
         </div>
@@ -34,7 +37,7 @@ function OrderContact() {
           <Title title={"Delivery"} />
 
           <div className="h-[300px] gap-x-2.5 gap-y-2.5 grid grid-cols-2 grid-rows-5">
-            <FormFieldWrapper className="col-span-2 row-span-1 px-1.5">
+            <FormFieldWrapper className="col-span-2 row-span-1 px-1.5 border border-zinc-300 ">
               <select className="w-full h-full outline-none">
                 <option>Pakistan</option>
               </select>
@@ -94,13 +97,7 @@ function OrderContact() {
 
 
          {/* Payment Section */ }
-
-         <div>
-            <Title title={'Payment'} />
-            <p className="text-[.9rem] text-zinc-500">All transactions are secure and encrypted.</p>
-
-            <div></div>
-         </div>
+           <Payment />
 
            {/* Payment Section End */ }
 
@@ -121,7 +118,7 @@ export default OrderContact;
 
 const FormFieldWrapper = ({ children, className = "" }) => {
   return (
-    <div className={`border border-zinc-300 rounded-[8px] ${className}`}>
+    <div className={`  ${className}`}>
       {children}
     </div>
   );

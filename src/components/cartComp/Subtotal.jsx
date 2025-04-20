@@ -3,6 +3,7 @@ import { motion, useAnimationControls } from "framer-motion";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { cartSelectors } from '../../redux-store/slices/cart/cartSlice';
 import { useSelector } from 'react-redux';
+import { Slide, toast } from 'react-toastify';
 
 function Subtotal() {
     const { selectCartItems } = cartSelectors;
@@ -24,7 +25,7 @@ function Subtotal() {
     </div>
 
     <div className='flex flex-col items-center gap-4'>
- <CheckOutBtn title={'Checkout'} />
+ <CheckOutBtn title={'Checkout'} items={items} />
  <ContinueShoppingBtn />
     </div>
     </div>
@@ -49,11 +50,29 @@ function ContinueShoppingBtn(){
 
 
 
-function CheckOutBtn({title}){
+function CheckOutBtn({title,items}){
+
 
     const navigate=useNavigate();
     function handleNavigate(){
+        
+        if(items.length>0){
         navigate("/checkout")
+        }
+        else {
+            toast.error("Cart is empty", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            })
+
+        }
     }
     return (
         
