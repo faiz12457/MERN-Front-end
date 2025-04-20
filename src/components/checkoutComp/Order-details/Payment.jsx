@@ -48,7 +48,7 @@ export default Payment
 
 function CustomRadio({type="radio",name,value,title,id}){
   return (
-    <label htmlFor={id} class={`cursor-pointer  w-full h-full flex items-center gap-1.5 px-3`}>
+    <label htmlFor={id} className={`cursor-pointer  w-full h-full flex items-center gap-1.5 px-3`}>
     <input
       type={type}
       name={name}

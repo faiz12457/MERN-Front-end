@@ -8,11 +8,11 @@ import { Slide, toast } from 'react-toastify';
 function Subtotal() {
     const { selectCartItems } = cartSelectors;
       const items = useSelector(selectCartItems);
-      const totalCost=items?.reduce((total,item)=>{
+      const totalCost=Math.ceil(items?.reduce((total,item)=>{
         const discountPrice =item.product.price - item.product.price * (item.product.discountPercentage / 100)
          const  finalPrice=discountPrice*item.quantity;
          return total+=finalPrice;  
-      },0)
+      },0))
   return (
     <div className='flex flex-col gap-4'>
     <div className=' flex items-center bg-white'>

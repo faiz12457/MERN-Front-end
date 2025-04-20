@@ -58,13 +58,14 @@ function App() {
           path: "/orders",
           element: <ProtectedRoute Component={<Orders />} />,
         },
+        {
+          path: "/checkout",
+          element: <ProtectedRoute Component={<Checkout />} />,
+        },
       ],
     },
 
-    {
-      path: "/checkout",
-      element: <ProtectedRoute Component={<Checkout />} />,
-    },
+   
 
     {
       path: "/login",
