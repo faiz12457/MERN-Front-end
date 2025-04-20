@@ -16,6 +16,7 @@ import {
 } from "../../redux-store/slices/address/addressSlice";
 import { Slide, toast } from "react-toastify";
 import { UpdateAddress } from "../addressComp/UpdateAddress";
+import Loader from "../../loaders/Loader";
 
 function Profile() {
   const [addAddress, setAddAddress] = useState(false);
@@ -60,6 +61,8 @@ function Profile() {
     dispatch(resetAddressAddStatus());
   }, [registerStatus]);
 
+  
+
   useEffect(() => {
     toast.error(errors, {
       position: "top-right",
@@ -92,8 +95,19 @@ function Profile() {
     if (status === "idle") {
       dispatch(fetchUserAddress());
     }
+  
   }, [status]);
 
+
+  if (status === "loading") {
+    return (
+      <div className="w-full h-screen grid place-content-center">
+        <Loader />
+      </div>
+    );
+  } 
+
+  
   return (
     <div
       className="w-[800px]  p-4 mt-20 z-0 mx-auto  rounded-2xl"

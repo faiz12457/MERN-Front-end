@@ -26,7 +26,7 @@ function ProductDetailPage() {
     })
     dispatch(fetchSingleProduct(id));
   }, []);
-
+  
   if (status === "loading") {
     return (
       <div className="w-full h-screen grid place-content-center">

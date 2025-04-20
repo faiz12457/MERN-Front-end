@@ -45,10 +45,14 @@ function Navbar() {
   const userStatus = useSelector(selectUserStatus);
 
   useEffect(() => {
-    if (userStatus === "idle") {
+   if (userStatus === "idle") {
       dispatch(fetchSingleUser());
-    }
-  }, [dispatch, userStatus]);
+    } 
+   
+
+  }, []);
+ 
+  
 
   async function handleLogout() {
     try {

@@ -1,12 +1,16 @@
-export function Input({type,placeholder,name}){
+export function Input({type,placeholder,name,value,handlechange,handleblur,error,touched}){
     return(
       <div className="relative w-full h-full border border-zinc-300 rounded-lg flex items-center ">
       <input
         id={name}
         name={name}
         type={type}
-        placeholder=" "   
-        required            
+        onChange={handlechange}
+        onBlur={handleblur}
+        value={value}
+        placeholder=" "  
+        required 
+      
         className="
           peer
           w-full

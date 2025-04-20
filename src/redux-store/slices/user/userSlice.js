@@ -31,7 +31,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSingleUser.pending, (state) => {
-        state.status === "loading";
+        state.status ="loading";
       })
       .addCase(fetchSingleUser.fulfilled, (state, action) => {
         state.status = "succeed";
