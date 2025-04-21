@@ -15,12 +15,14 @@ import ProductDetailPage from "./components/productsComp/ProductDetailPage.jsx";
 import Profile from "./components/profileComp/Profile.jsx";
 import Checkout from "./components/checkoutComp/Checkout.jsx";
 import OrderSuccess from "./components/ordersComp/OrderSuccess.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <AppLayout />,
+      errorElement:<ErrorPage />,
       children: [
         {
           path: "/",
