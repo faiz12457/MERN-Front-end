@@ -73,7 +73,7 @@ function CustomRadio({type="radio",name,value,title,id,checked}){
       <span className="text-[#000000] text-[.9rem] ">
       {title}
       </span>
-    {value==="card" && <PaymentIcons />}
+    {value==="CARD" && <PaymentIcons />}
   </label>
   )
 }

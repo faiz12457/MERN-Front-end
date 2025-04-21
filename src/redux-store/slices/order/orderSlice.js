@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createOrder } from "./orderApi";
+import { createOrder, getUserOrder } from "./orderApi";
 
 const initialState = {
   createOrderStatus: "idle",
   createOrderId: null,
   successMsg: null,
   errors: null,
+  userOrders: [],
+  userOrdersStatus: "idle",
 };
 
 export const createOrderThunk = createAsyncThunk(
@@ -15,6 +17,11 @@ export const createOrderThunk = createAsyncThunk(
     return res;
   }
 );
+
+export const getUserOrderThunk = createAsyncThunk("/userOrder", async () => {
+  const res = await getUserOrder();
+  return res;
+});
 
 const orderSlice = createSlice({
   name: "order",
@@ -36,6 +43,14 @@ const orderSlice = createSlice({
     resetOrderId: (state) => {
       state.createOrderId = null;
     },
+
+    resetUserOrdersStatus: (state) => {
+      state.userOrdersStatus = "idle";
+    },
+
+    resetUserOrders: (state) => {
+      state.userOrders = [];
+    },
   },
 
   extraReducers: (bulider) => {
@@ -51,9 +66,24 @@ const orderSlice = createSlice({
       })
       .addCase(createOrderThunk.rejected, (state, action) => {
         state.createOrderStatus = "failed";
-        (state.successMsg = null),
-          (state.createOrderId = null),
-          (state.errors = action.error.message);
+        state.successMsg = null;
+        state.createOrderId = null;
+        state.errors = action.error.message;
+      })
+      .addCase(getUserOrderThunk.pending, (state) => {
+        state.userOrdersStatus = "loading";
+      })
+      .addCase(getUserOrderThunk.fulfilled, (state, action) => {
+        state.userOrders = action.payload;
+        state.errors = null;
+        state.userOrdersStatus = "succeed";
+        state.successMsg = "Order fetch successfully";
+      })
+      .addCase(getUserOrderThunk.rejected, (state, action) => {
+        state.userOrdersStatus = "failed";
+        state.userOrders = [];
+        state.errors = action.error.message;
+        state.successMsg = null;
       });
   },
 });
@@ -70,6 +100,8 @@ export const orderSelectors = {
   selectOrderSuccessMsg: (state) => state.orderSlice.successMsg,
   selectOrderErrors: (state) => state.orderSlice.errors,
   selectCreateOrderStatus: (state) => state.orderSlice.createOrderStatus,
+  selectUserOrdersStatus: (state) => state.orderSlice.userOrdersStatus,
+  selectUserOrders: (state) => state.orderSlice.userOrders,
 };
 
 export default orderSlice.reducer;

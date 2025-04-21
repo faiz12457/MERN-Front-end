@@ -7,7 +7,7 @@ function ItemCard({item}) {
     const {quantity,color,product,_id,size}=item
     const {price, discountPercentage,name,images}=product
     const discountPrice = price - price * (discountPercentage / 100);
-    const finalPrice = discountPrice * quantity;
+    const finalPrice =Math.ceil(discountPrice * quantity);
 
     function handleRemove(){
        dispatch(deleteCartItemThunk(_id));
@@ -27,7 +27,7 @@ function ItemCard({item}) {
     </div>
 
     <div className='flex flex-col'>
- <p className='text-[.8rem]  font-medium '>$ {finalPrice.toFixed(0)}.00</p>
+ <p className='text-[.8rem]  font-medium '>$ {finalPrice}.00</p>
  <p onClick={handleRemove} className='text-[.8rem]  text-zinc-500 font-medium hover:underline cursor-pointer   '>Remove</p>
     </div>
 </div>

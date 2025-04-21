@@ -10,7 +10,7 @@ export default function CartCard({ item }) {
   const { color, size, product, quantity, user, _id } = item;
   const { price, discountPercentage, name, images, inStock } = product;
   const discountPrice = price - price * (discountPercentage / 100);
-  const finalPrice = discountPrice * quantity;
+  const finalPrice =Math.ceil( discountPrice * quantity);
   const {selectCartUpdateStatus}=cartSelectors
   const updateStatus=useSelector(selectCartUpdateStatus)
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ export default function CartCard({ item }) {
             <p className="mt-1 text-sm text-gray-500">Size: {size}</p>
           </div>
           <p className="text-base font-medium text-gray-900">
-            ${finalPrice.toFixed(0)}
+            ${finalPrice}
           </p>
         </div>
 
