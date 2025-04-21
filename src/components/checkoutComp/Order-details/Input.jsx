@@ -1,6 +1,16 @@
-export function Input({type,placeholder,name,value,handlechange,handleblur,error,touched}){
-    return(
-      <div className="relative w-full h-full border border-zinc-300 rounded-lg flex items-center ">
+export function Input({
+  type,
+  placeholder,
+  name,
+  value,
+  handlechange,
+  handleblur,
+  error,
+  touched,
+}) {
+  return (
+    <div className="relative w-full h-full ">
+    
       <input
         id={name}
         name={name}
@@ -8,61 +18,21 @@ export function Input({type,placeholder,name,value,handlechange,handleblur,error
         onChange={handlechange}
         onBlur={handleblur}
         value={value}
-        placeholder=" "  
-        required 
-      
-        className="
-          peer
-          w-full
-          h-full
-          bg-transparent
-          appearance-none
-          outline-none
-          text-sm
-          px-4
-        "
+        placeholder={placeholder}
+        className={`peer h-12 w-full border border-gray-300  rounded-md px-3  pt-5 pb-1 text-sm placeholder-transparent focus:outline-none
+        focus:ring-2 focus:ring-blue-500  `}
       />
-    
       <label
-        htmlFor={name}
-        className="
-          absolute
-          left-4
-          top-1/2
-          transform -translate-y-1/2
-    
-          pointer-events-none
-          transition-all
-          duration-200
-    
-          text-zinc-500
-          text-base
-    
-          /* empty state: centered */
-          peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:-translate-y-1/2
-    
-        
-          
-    
-          peer-valid:top-2.5
-          peer-valid:-translate-y-2
-          peer-valid:text-xs
-          peer-valid:text-zinc-700
-        "
+        htmlFor="firstName"
+        className="absolute left-3 top-1 pointer-events-none
+   text-gray-600 text-xs transition-all peer-placeholder-shown:top-4 
+   peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:top-1
+    peer-focus:text-xs peer-focus:text-blue-600"
       >
         {placeholder}
       </label>
-    </div>
+      {error && touched && <p className="text-xs text-red-600 ml-1 mt-0.5">{error}</p>}
     
-    )
-
-}; 
-
-
-
-
-// peer-focus:top-2.5
-// peer-focus:-translate-y-2
-// peer-focus:text-xs
-// peer-focus:text-zinc-700
+    </div>
+  );
+}

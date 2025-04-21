@@ -25,6 +25,7 @@ import {
   resetCreateOrderStatus,
 } from "../../../redux-store/slices/order/orderSlice";
 import { useNavigate } from "react-router-dom";
+import { checkoutSchema } from "../../../yupSchema/schema";
 
 function OrderContact() {
   const dispatch = useDispatch();
@@ -110,7 +111,7 @@ function OrderContact() {
       postalCode: address?.postalCode,
       phone: address?.phoneNumber,
     },
-
+      validationSchema:checkoutSchema,
     onSubmit,
   });
 
@@ -141,12 +142,7 @@ function OrderContact() {
         <div className="flex flex-col gap-2.5">
           <Title title={"Contact"} />
 
-          <div className="w-full  h-12">
-            {/* <input
-              type="email"
-              className=" py-3 pl-3 outline-none w-full h-full"
-              placeholder="Email"
-            /> */}
+          <div className="w-full">
             <Input
               type={"text"}
               name={"email"}
@@ -168,9 +164,9 @@ function OrderContact() {
         <div className="flex flex-col gap-3.5">
           <Title title={"Delivery"} />
 
-          <div className="h-[300px] gap-x-2.5 gap-y-2.5 grid grid-cols-2 grid-rows-5">
-            <FormFieldWrapper className="col-span-2 row-span-1 px-1.5 border border-zinc-300 ">
-              <select className="w-full h-full outline-none">
+          <div className=" gap-x-2.5 gap-y-2.5 grid grid-cols-2 ">
+            <FormFieldWrapper className="col-span-2 row-span-1 px-1.5 border border-zinc-300  rounded">
+              <select className="w-full h-12 outline-none ">
                 <option>Pakistan</option>
               </select>
             </FormFieldWrapper>
@@ -291,5 +287,5 @@ function OrderContact() {
 export default OrderContact;
 
 const FormFieldWrapper = ({ children, className = "" }) => {
-  return <div className={`  ${className}`}>{children}</div>;
+  return <div className={`   ${className}`}>{children}</div>;
 };
