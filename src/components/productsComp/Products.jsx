@@ -11,6 +11,7 @@ import {
 } from "../../redux-store/slices/cart/cartSlice";
 import { Slide, toast } from "react-toastify";
 
+
 function Products() {
   const dispatch = useDispatch();
 
@@ -20,11 +21,13 @@ function Products() {
   const { selectCartAddStatus } = cartSelectors;
   const status = useSelector(selectCartAddStatus);
 
+
   useEffect(() => {
     if (productsStatus === "idle") {
       dispatch(fetchAllProducts());
     }
   }, [dispatch, productsStatus]);
+
 
   useEffect(() => {
     if (status === "succeed") {

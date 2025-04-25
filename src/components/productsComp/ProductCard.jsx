@@ -11,6 +11,7 @@ import {
 } from "../../redux-store/slices/cart/cartSlice";
 import { Slide, toast } from "react-toastify";
 function ProductCard({ Product }) {
+  
   const { selectUser } = userSelectors;
   const user = useSelector(selectUser);
   const { selectCartAddStatus } = cartSelectors;
@@ -57,6 +58,7 @@ function ProductCard({ Product }) {
     
   }
   }
+  
 
   return (
     <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
@@ -68,7 +70,7 @@ function ProductCard({ Product }) {
       />
       <div className="px-4 py-3 w-72">
         <span className="text-gray-400 mr-3 uppercase text-xs">
-          {productBrand}
+          {productBrand.name}
         </span>
         <NavLink to={`/product-detail/${id}`}>
           <p className="text-lg font-bold text-black truncate hover:underline block capitalize">

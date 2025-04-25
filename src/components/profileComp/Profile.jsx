@@ -91,12 +91,7 @@ function Profile() {
     dispatch(deleteUserAddressThunk());
   }
 
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchUserAddress());
-    }
-  
-  }, [status]);
+ 
 
 
   if (status === "loading") {

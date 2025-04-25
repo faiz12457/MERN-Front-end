@@ -22,6 +22,7 @@ import {
   userSelectors,
 } from "../../redux-store/slices/user/userSlice";
 import { cartSelectors, getCartItemsThunk } from "../../redux-store/slices/cart/cartSlice";
+import { useFetchUser } from "../hooks/useFetchUser";
 
 function Navbar() {
   const menuRef=useRef(null)
@@ -30,9 +31,7 @@ function Navbar() {
   const { selectCartItems } = cartSelectors;
     const items = useSelector(selectCartItems);
     const token = localStorage.getItem("token");
-      useEffect(() => {
-        dispatch(getCartItemsThunk(token));
-      }, []);
+     
 
   function handleMenu(){
     setIsOpen(!openMenu);
@@ -44,13 +43,10 @@ function Navbar() {
   const user = useSelector(selectUser);
   const userStatus = useSelector(selectUserStatus);
 
-  useEffect(() => {
-   if (userStatus === "idle") {
-      dispatch(fetchSingleUser());
-    } 
-   
+  
+       useFetchUser();
 
-  }, []);
+  
  
   
 

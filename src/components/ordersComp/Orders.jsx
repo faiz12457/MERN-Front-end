@@ -36,10 +36,7 @@ function Orders() {
        dispatch(resetAddCartStatus());
   },[addtocartstatus])
 
-  useEffect(() => {
-    dispatch(getUserOrderThunk());
-  }, []);
-
+ 
    
 
   if (orderStatus === "loading") {
