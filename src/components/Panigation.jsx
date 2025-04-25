@@ -4,9 +4,8 @@ import React, { useState } from 'react'
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
-function Panigation({totalPages=11}) {
 
-    const [currentPage,setCurrPage]=useState(1);
+function Panigation({currentPage,setCurrPage,totalPages=11}) {
     function goToPage(page){
         if(currentPage>=1&&currentPage<=totalPages){
             setCurrPage(page);

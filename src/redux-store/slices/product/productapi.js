@@ -1,29 +1,23 @@
 import api from "../../../../api";
 
+export async function getAllProducts(data) {
+  let queryString = "";
+  queryString += `page=${data.panigation.page}&pagesize=${data.panigation.pageSize}&`;
+  queryString+=`sort=${data.sort.sort}&order=${data.sort.order}`
+  try {
+    const res = await api.get(`/products?${queryString}`);
 
-
-
-
-export async function getAllProducts(){
-       try {
-            const res=await api.get("/products");
-            
-        return  res.data;
-       } catch (error) {
-        throw error.response.data
-       }
-
+    return res.data;
+  } catch (error) {
+    throw error.response.data;
   }
+}
 
-
-  export async function getSingleProduct(id) {
-     try {
-          const res=await api.get(`products/details/${id}`);
-          return res.data;
-          
-     } catch (error) {
-          throw error.response.data
-          
-     }
-     
+export async function getSingleProduct(id) {
+  try {
+    const res = await api.get(`products/details/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error.response.data;
   }
+}

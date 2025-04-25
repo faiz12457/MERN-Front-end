@@ -8,10 +8,11 @@ const initialState = {
   singleProductStatus:"idle",
   error: null,
   successMessage: null,
+  totalResults:0,
 };
 
-export const fetchAllProducts = createAsyncThunk("/products", async () => {
-  const products = await getAllProducts();
+export const fetchAllProducts = createAsyncThunk("/products", async (data) => {
+  const products = await getAllProducts(data);
   return products;
 });
 
@@ -46,8 +47,10 @@ const productSlice = createSlice({
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.status = "succeed";
-        state.products = action.payload;
+        state.products = action.payload.data;
+        state.totalResults=action.payload.totalResults
         state.successMessage = "Products fetched successfully!";
+      
         state.error = null;
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
@@ -88,6 +91,7 @@ export const productSelectors = {
   selectProductsErrors: (state) => state.productSlice.error,
   selectSingleProduct:(state)=>state.productSlice.singleProduct,
   selectSingleProductStatus:(state)=>state.productSlice.singleProductStatus,
+  selectTotalResults:(state)=>state.productSlice.totalResults
 };
 
 export default productSlice.reducer;

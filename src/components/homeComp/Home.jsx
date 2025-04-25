@@ -12,7 +12,7 @@ function Home() {
     <div className='mt-16'>
      <HomeCarousel />
      <Products />
-     <Pagination />
+     
      </div>
   )
 }

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { productSelectors } from '../redux-store/slices/product/productSlice'
@@ -15,18 +14,8 @@ function AppLayout() {
   const uStatus=useSelector(selectUserStatus);
 
   
-  
-  const productsStatus=useSelector(selectProductsStatus)
 
 
-  if(productsStatus==="loading"){
-   
-    return (
-      <div className='w-full h-screen grid place-content-center'>
-        <Loader />
-      </div>
-    );
-  }
     return (
       <>
           <Navbar />

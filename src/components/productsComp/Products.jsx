@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProducts,
@@ -10,24 +10,36 @@ import {
   resetAddCartStatus,
 } from "../../redux-store/slices/cart/cartSlice";
 import { Slide, toast } from "react-toastify";
+import Panigation from "../Panigation";
+import Loader from "../../loaders/Loader";
+import { validateYupSchema } from "formik";
 
-
+const pageSize = 12;
 function Products() {
   const dispatch = useDispatch();
-
-  const { selectProducts, selectProductsStatus } = productSelectors;
+  const [currentPage, setCurrPage] = useState(1);
+  const { selectProducts, selectProductsStatus, selectTotalResults } =
+    productSelectors;
   const products = useSelector(selectProducts);
   const productsStatus = useSelector(selectProductsStatus);
   const { selectCartAddStatus } = cartSelectors;
   const status = useSelector(selectCartAddStatus);
+  const totalResults = useSelector(selectTotalResults);
+  const [sort, setSort] = useState("");
 
+  const sortOptions = [
+    { name: "Default", order: "" },
+    { name: "Price: (low to high)", sort: "price", order: "asc" },
+    { name: "Price: (high to low)", sort: "price", order: "desc" },
+  ];
 
   useEffect(() => {
-    if (productsStatus === "idle") {
-      dispatch(fetchAllProducts());
-    }
-  }, [dispatch, productsStatus]);
+    const finalFilters = {};
+    finalFilters["sort"] = { sort: "price", order: sort };
+    finalFilters["panigation"] = { page: currentPage, pageSize };
 
+    dispatch(fetchAllProducts(finalFilters));
+  }, [currentPage, sort]);
 
   useEffect(() => {
     if (status === "succeed") {
@@ -47,12 +59,42 @@ function Products() {
     }
   }, [status]);
 
+  if (productsStatus === "loading") {
+    return (
+      <div className="w-full h-screen grid place-content-center">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
-    <div className="mt-7 flex flex-wrap w-[90%] mx-auto gap-4 justify-center items-center">
-      {products?.map((Product, index) => (
-        <ProductCard Product={Product} key={index} />
-      ))}
-    </div>
+    <>
+      <div className="w-[90%] mx-auto flex justify-end">
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="border border-gray-300 p-1.5 outline-none rounded"
+        >
+          {sortOptions.map((option, i) => {
+            return (
+              <option key={option + i} value={option.order}>
+                {option.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className="mt-7 flex flex-wrap w-[90%] mx-auto gap-4 justify-center items-center">
+        {products?.map((Product, index) => (
+          <ProductCard Product={Product} key={index} />
+        ))}
+      </div>
+      <Panigation
+        currentPage={currentPage}
+        setCurrPage={setCurrPage}
+        totalPages={Math.ceil(totalResults / pageSize)}
+      />
+    </>
   );
 }
 
