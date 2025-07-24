@@ -7,13 +7,14 @@ import Loader from '../../loaders/Loader';
 import { userSelectors } from '../../redux-store/slices/user/userSlice';
 import { cartSelectors } from '../../redux-store/slices/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { selectLoginStatus } from '../../redux-store/slices/auth/authSlice';
 
 function Checkout() {
   
   const {  selectAddressStatus } = addressSelectors;
   const addressStatus = useSelector(selectAddressStatus)
   const {selectUserStatus}=userSelectors
-  const userStatus=useSelector(selectUserStatus);
+  const userStatus=useSelector(selectLoginStatus);
   const {selectCartItems}=cartSelectors
   const items=useSelector(selectCartItems);
   const navigate=useNavigate();

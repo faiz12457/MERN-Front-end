@@ -19,7 +19,7 @@ export function Input({
         onBlur={handleblur}
         value={value}
         placeholder={placeholder}
-        className={`peer h-12 w-full border border-gray-300  rounded-md px-3  pt-5 pb-1 text-sm placeholder-transparent focus:outline-none
+        className={`peer h-12 w-full border border-gray-300  rounded-md px-3  pt-3 pb-1 text-sm placeholder-transparent focus:outline-none
         focus:ring-2 focus:ring-blue-500  `}
       />
       <label

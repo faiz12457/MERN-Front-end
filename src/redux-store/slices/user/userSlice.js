@@ -26,16 +26,21 @@ const userSlice = createSlice({
     resetUserStatus:(state)=>{
         state.status='idle'
     },
+    resetUser:(state)=>{
+      state.user=null;
+    }
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(fetchSingleUser.pending, (state) => {
         state.status ="loading";
+        state.error=null;
+        state.successMessage=null;
       })
       .addCase(fetchSingleUser.fulfilled, (state, action) => {
         state.status = "succeed";
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.successMessage = "User fetched successfully!";
         state.error = null;
       })
@@ -48,7 +53,7 @@ const userSlice = createSlice({
 });
 
 
- export const  {clearUserErrors,clearUserSuccessMessage,resetUserStatus} =userSlice.actions
+export const  {clearUserErrors,clearUserSuccessMessage,resetUserStatus,resetUser} =userSlice.actions
 
 
 export const userSelectors={

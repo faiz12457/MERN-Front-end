@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { userSelectors } from "../../redux-store/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { BsBagPlus } from "react-icons/bs";
@@ -10,10 +9,10 @@ import {
   resetAddCartStatus,
 } from "../../redux-store/slices/cart/cartSlice";
 import { Slide, toast } from "react-toastify";
+import { selectLoginUser } from "../../redux-store/slices/auth/authSlice";
 function ProductCard({ Product }) {
   
-  const { selectUser } = userSelectors;
-  const user = useSelector(selectUser);
+  const user = useSelector(selectLoginUser);
   const { selectCartAddStatus } = cartSelectors;
   const status = useSelector(selectCartAddStatus);
   const dispatch = useDispatch();
@@ -26,42 +25,38 @@ function ProductCard({ Product }) {
     _id: id,
     colorsAvailable,
     sizes,
-    inStock
+    inStock,
   } = Product;
 
-  
   const discountPrice = price - price * (discountPercentage / 100);
 
   function handleCart() {
-    if(inStock){
-    const data = {
-      quantity: 1,
-      color: colorsAvailable[0],
-      size: sizes[0],
-      productId: id,
-      userId: user._id,
-    };
-    dispatch(addCartItemThunk(data));
+    if (inStock) {
+      const data = {
+        quantity: 1,
+        color: colorsAvailable[0],
+        size: sizes[0],
+        productId: id,
+        userId: user._id,
+      };
+      dispatch(addCartItemThunk(data));
+    } else {
+      toast.error("Out of stock", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+    }
   }
-  else{
-     toast.error("Out of stock", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        })
-    
-  }
-  }
-  
 
   return (
-    <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+    <div className="w-72 bg-white  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
       <img
         src={images[0]}
         loading="lazy"

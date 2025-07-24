@@ -26,13 +26,14 @@ import {
 } from "../../../redux-store/slices/order/orderSlice";
 import { useNavigate } from "react-router-dom";
 import { checkoutSchema } from "../../../yupSchema/schema";
+import { selectLoginStatus, selectLoginUser } from "../../../redux-store/slices/auth/authSlice";
 
 function OrderContact() {
   const dispatch = useDispatch();
   const { selectUser, selectUserStatus } = userSelectors;
   const { selectUserAddress, selectAddressStatus } = addressSelectors;
-  const user = useSelector(selectUser);
-  const userStatus = useSelector(selectUserStatus);
+  const user=useSelector(selectLoginUser);
+  const userStatus = useSelector(selectLoginStatus);
   const address = useSelector(selectUserAddress);
   const addressStatus = useSelector(selectAddressStatus);
   const { _id: userId } = user || {};
@@ -101,11 +102,13 @@ function OrderContact() {
     dispatch(createOrderThunk(order));
   }
 
+  
+
   const formik = useFormik({
     initialValues: {
       email: user?.email,
-      fname: user?.username.trim().split(" ")[0],
-      lname: user?.username.trim().split(" ").slice(-1)[0],
+      fname: user?.userName.trim().split(" ")[0],
+      lname: user?.userName.trim().split(" ").slice(-1)[0],
       address: address?.street,
       city: address?.city,
       postalCode: address?.postalCode,

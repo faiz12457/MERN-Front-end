@@ -61,23 +61,8 @@ function Profile() {
     dispatch(resetAddressAddStatus());
   }, [registerStatus]);
 
+     
   
-
-  useEffect(() => {
-    toast.error(errors, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      theme: "light",
-      transition: Slide,
-    });
-
-    dispatch(resetAddressErrors());
-  }, [errors]);
 
   function handleregisterAddress(data) {
     dispatch(registerUserAddressThunk(data));
@@ -94,9 +79,9 @@ function Profile() {
  
 
 
-  if (status === "loading") {
+  if (status === "loading ") {
     return (
-      <div className="w-full h-screen grid place-content-center">
+      <div className="w-full  h-screen grid place-content-center">
         <Loader />
       </div>
     );

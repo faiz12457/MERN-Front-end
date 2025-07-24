@@ -1,5 +1,5 @@
 import api from "../../../../api";
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("accessToken");
 export const getUserAddress = async () => {
  
  try {
@@ -30,6 +30,7 @@ export const registerUserAddress=async(data)=>{
     return res.data;
     
   } catch (error) {
+  
     throw error.response.data
   }
 }

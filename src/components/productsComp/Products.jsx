@@ -61,8 +61,15 @@ function Products() {
 
   if (productsStatus === "loading") {
     return (
-      <div className="w-full h-screen grid place-content-center">
-        <Loader />
+      <div className="mt-7 flex flex-wrap w-[90%] mx-auto gap-4 justify-center items-center">
+        {Array.from({ length: 10 }).map((_, idx) => {
+          return (
+            <div
+              key={idx}
+              className="w-72 h-96  bg-gray-200 animate-pulse rounded-md "
+            ></div>
+          );
+        })}
       </div>
     );
   }

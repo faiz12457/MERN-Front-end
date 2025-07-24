@@ -1,5 +1,5 @@
 import api from "../../../../api";
-const token=localStorage.getItem("token");
+const token=localStorage.getItem("accessToken");
 export const getCartItems = async (id) => {
   try {
     const res = await api.get(`/cart/items/${id}`);

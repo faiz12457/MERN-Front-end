@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 import { createPortal } from "react-dom";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logoutThunk, resetLoginUser, resetLogoutStatus, selectLogoutErrors, selectLogoutStatus } from "../../redux-store/slices/auth/authSlice";
+import { resetUser } from "../../redux-store/slices/user/userSlice";
 const settings = [
   { name: "Home", to: "/" },
   { name: "Profile", to: "/profile" },
   { name: "My orders", to: "/orders" },
   { name: "Logout", to: "/logout" },
 ];
-function ProfileMenu({ setIsOpen, menuRef, openMenu, handleLogout }) {
+function ProfileMenu({ setIsOpen, menuRef, openMenu}) {
   const [left, setLeft] = useState(null);
 
   function updatePosition() {
@@ -30,6 +33,23 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu, handleLogout }) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, [openMenu, menuRef]);
+
+
+   const dispatch = useDispatch();
+  const logoutStatus = useSelector(selectLogoutStatus);
+  const logoutErrors = useSelector(selectLogoutErrors);
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    const resultAction = await dispatch(logoutThunk());
+
+    if (logoutThunk.fulfilled.match(resultAction)) {
+      localStorage.removeItem("accessToken");
+      dispatch(resetLogoutStatus());
+      dispatch(resetLoginUser());
+      navigate("/login");
+    }
+  }
   if (openMenu && left === null) return null;
   return createPortal(
     <>

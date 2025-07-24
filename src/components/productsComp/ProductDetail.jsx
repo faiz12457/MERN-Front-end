@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import { userSelectors } from "../../redux-store/slices/user/userSlice";
 import { addCartItemThunk, cartSelectors, resetAddCartStatus } from "../../redux-store/slices/cart/cartSlice";
 import { Slide, toast } from "react-toastify";
+import { selectLoginUser } from "../../redux-store/slices/auth/authSlice";
 function ProductDetail({ product }) {
   const {selectCartAddStatus,selectCartItems}=cartSelectors
   const items=useSelector(selectCartItems)
@@ -142,9 +143,10 @@ function ProductsOrderInfo({
  
 const {selectUser}=userSelectors
 const dispatch=useDispatch();
-const user=useSelector(selectUser);
+const user=useSelector(selectLoginUser);
    const defaultColor= colors&& colors[0];
  const defaultSize=sizes&& sizes[0];
+ 
   const {id}=useParams();
   const [color,setColor]=useState(defaultColor);
   const [size,setSize]=useState(defaultSize);

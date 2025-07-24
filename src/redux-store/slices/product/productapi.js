@@ -21,3 +21,7 @@ export async function getSingleProduct(id) {
     throw error.response.data;
   }
 }
+
+
+
+

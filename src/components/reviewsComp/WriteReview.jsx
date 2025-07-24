@@ -7,23 +7,23 @@ import { userSelectors } from '../../redux-store/slices/user/userSlice';
 import { clearReviewErrors, clearReviewSuccessMsg, getReviewsThunk, registerReviewThunk, resetRegisterReviewStatus, reviewSelectors } from '../../redux-store/slices/review/reviewSlice';
 import { useParams } from 'react-router-dom';
 import { Slide, toast } from 'react-toastify';
+import { selectLoginUser } from '../../redux-store/slices/auth/authSlice';
 
 function WriteReview() {
  const [hover,setHover]=useState(0);
   const [rating,setRating]=useState(1);
  ;
   const [reviewmsg, setReviewMsg] = useState("");
-  
 
     const [isReview,setIsReview]=useState(false)
  const dispatch=useDispatch();
-    const {selectUser}=userSelectors;
+    
     const {selectReviewRegisterStatus,selectReviewSuccessMsg,selectReviewsErrors}=reviewSelectors;
     const registerReviewStatus=useSelector(selectReviewRegisterStatus);
     const reviewSuccessMsg=useSelector(selectReviewSuccessMsg);
     const reviewError=useSelector(selectReviewsErrors);
   
-    const user=useSelector(selectUser);
+    const user=useSelector(selectLoginUser);
     const {id}=useParams();
 
    

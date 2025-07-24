@@ -1,33 +1,30 @@
-import React, { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { productSelectors } from '../redux-store/slices/product/productSlice'
-import Loader from '../loaders/Loader'
-import { addressSelectors } from '../redux-store/slices/address/addressSlice'
-import Navbar from './header-footer-comp/Navbar'
-import Footer from './header-footer-comp/Footer'
-import { userSelectors } from '../redux-store/slices/user/userSlice'
+import React, { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "./header-footer-comp/Navbar";
+import Footer from "./header-footer-comp/Footer";
+import ProtectedRoute from "../Routes/ProtectedRoute";
+import { selectLoggedInStatus } from "../redux-store/slices/auth/authSlice";
+import Loader from "../loaders/Loader";
+import { useSelector } from "react-redux";
+
+
 
 function AppLayout() {
-  const {selectProductsStatus}=productSelectors;
-  const {selectUserStatus}=userSelectors
-  const uStatus=useSelector(selectUserStatus);
+ const status=useSelector(selectLoggedInStatus);
 
-  
+ if(status=='pending'){
+  return <div className="w-full h-screen grid place-content-center">
+<Loader />
+  </div>
+ }
 
-
-    return (
-      <>
-          <Navbar />
-          <Outlet />
-          <Footer />
-      </>
-      
-    )
-
-  
-
- 
+  return (
+    <>
+      <ProtectedRoute Component={<Navbar />} />
+      <Outlet />
+      <ProtectedRoute Component={<Footer />} />
+    </>
+  );
 }
 
-export default AppLayout
+export default AppLayout;

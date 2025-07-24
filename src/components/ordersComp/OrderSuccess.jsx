@@ -1,14 +1,13 @@
 import React from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { motion, } from "framer-motion";
-import { userSelectors } from '../../redux-store/slices/user/userSlice';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useSelector } from 'react-redux';
+import { selectLoginUser } from '../../redux-store/slices/auth/authSlice';
 
 function OrderSuccess() {
     const {id}=useParams();
-    const {selectUser}=userSelectors
-    const user=useSelector(selectUser)
+    const user=useSelector(selectLoginUser)
     
   return (
     <div className='w-full h-screen grid place-content-center'>
@@ -30,7 +29,7 @@ function OrderSuccess() {
     </div>
     
      <div className='flex flex-col gap-2'>
-        <p className='text-[1.3rem] text-center text-zinc-900'>Hey {user?.username}</p>
+        <p className='text-[1.3rem] text-center text-zinc-900'>Hey {user?.userName}</p>
         <p className='text-2xl text-center text-zinc-950'>Your Order {id} is confirmed</p>
         <p className='text-[1.3rem] text-center text-zinc-500'>Thankyou for shopping with us❤️</p>
      </div>

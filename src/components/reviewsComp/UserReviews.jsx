@@ -14,6 +14,7 @@ import {
 } from "../../redux-store/slices/review/reviewSlice";
 import { userSelectors } from "../../redux-store/slices/user/userSlice";
 import { Slide, toast } from "react-toastify";
+import { selectLoginUser } from "../../redux-store/slices/auth/authSlice";
 function UserReviews() {
   const { id } = useParams();
   const {
@@ -28,10 +29,10 @@ function UserReviews() {
   const errors = useSelector(selectReviewsErrors);
   const status = useSelector(selectGetReviewStatus);
   const updateStatus = useSelector(selectUpdateReviewStatus);
-  const { selectUser } = userSelectors;
+  
   const { selectDeleteReviewStatus } = reviewSelectors;
   const deleteReviewStatus = useSelector(selectDeleteReviewStatus);
-  const user = useSelector(selectUser);
+  const user = useSelector(selectLoginUser);
   const userId = user?._id;
   const dispatch = useDispatch();
 
@@ -169,11 +170,11 @@ export default UserReviews;
 function ProgressComp({ ratingPercent, number }) {
   const scale = ratingPercent / 100;
   return (
-    <div className="flex box-border gap-2  items-center">
+    <div className="flex box-border  gap-2  items-center">
       <p className="font-medium">{number} stars</p>
       <div className="w-[80%] h-4 bg-gray-200 rounded-[8px] overflow-hidden">
         <div
-          className="h-full bg-yellow-400 origin-left transition-transform duration-300"
+          className="h-full bg-yellow-400  origin-left transition-transform duration-300"
           style={{ transform: `scaleX(${scale})` }}
         ></div>
       </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
-import ProfileMenu from "../profileComp/ProfileMenu" 
+import ProfileMenu from "../profileComp/ProfileMenu";
 import {
   motion,
   AnimatePresence,
@@ -21,44 +21,34 @@ import {
   fetchSingleUser,
   userSelectors,
 } from "../../redux-store/slices/user/userSlice";
-import { cartSelectors, getCartItemsThunk } from "../../redux-store/slices/cart/cartSlice";
+import {
+  cartSelectors,
+  getCartItemsThunk,
+} from "../../redux-store/slices/cart/cartSlice";
 import { useFetchUser } from "../hooks/useFetchUser";
+import { selectLoginUser } from "../../redux-store/slices/auth/authSlice";
 
 function Navbar() {
-  const menuRef=useRef(null)
-  const [openMenu,setIsOpen]=useState(false)
+  const menuRef = useRef(null);
+  const [openMenu, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { selectCartItems } = cartSelectors;
-    const items = useSelector(selectCartItems);
-    const token = localStorage.getItem("token");
-     
+  const items = useSelector(selectCartItems);
+  const token = localStorage.getItem("token");
+  // useFetchUser
 
-  function handleMenu(){
+  function handleMenu() {
     setIsOpen(!openMenu);
-   
   }
-  
+
   const dispatch = useDispatch();
   const { selectUser, selectUserStatus } = userSelectors;
-  const user = useSelector(selectUser);
+  const user = useSelector(selectLoginUser);
   const userStatus = useSelector(selectUserStatus);
 
-  
-       useFetchUser();
+
 
   
- 
-  
-
-  async function handleLogout() {
-    try {
-      const res = await api.post("/auth/logout");
-      if (res.status === 200) {
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
-    } catch (error) {}
-  }
 
   const { scrollY } = useScroll();
   const [show, setIsShow] = useState(false);
@@ -90,53 +80,50 @@ function Navbar() {
         }}
         className="w-full h-16  bg-white z-50 fixed top-0"
       >
-        <div  className="w-[70%]  cursor-pointer mx-auto h-full flex items-center justify-between ">
-    
-    <NavLink to={'/'}>
-          <p className="text-xl text-black tracking-widest font-bold">
-            MERN SHOP
-          </p>
-          
+        <div className="w-[70%]   cursor-pointer mx-auto h-full flex items-center justify-between ">
+          <NavLink to={"/"}>
+            <p className="text-xl text-black     tracking-widest font-bold">
+              MERN SHOP
+            </p>
           </NavLink>
 
           <div className=" h-10 flex gap-5 items-center  ">
-
-          
-
-
-          <div className="relative group">
-  <div
-  ref={menuRef}
-  onClick={handleMenu}
-    className="w-10 h-10 bg-[#BDBDBD] rounded-full flex justify-center
+            <div className="relative group">
+              <div
+                ref={menuRef}
+                onClick={handleMenu}
+                className="w-10 h-10 bg-[#BDBDBD] rounded-full flex justify-center
     items-center text-white text-xl cursor-pointer"
-  >
-    {user?.username[0]}
-    
-  </div>
-  <span
-    className="absolute -bottom-10 mb-2 left-1/2 transform -translate-x-1/2
+              >
+                {user?.userName[0]}
+              </div>
+              <span
+                className="absolute -bottom-10 mb-2 left-1/2 transform -translate-x-1/2
       whitespace-nowrap bg-zinc-500 text-zinc-100 scale-0 group-hover:scale-100 transition-all duration-200   text-xs font-medium px-2 py-1 rounded opacity-0
       group-hover:opacity-100  "
-  >
-    Open settings
-  </span>
+              >
+                Open settings
+              </span>
 
-  { openMenu ? <ProfileMenu setIsOpen={setIsOpen} handleLogout={handleLogout} menuRef={menuRef} openMenu={openMenu} />:null}
-</div>
-          
+              {openMenu ? (
+                <ProfileMenu
+                  setIsOpen={setIsOpen}
+                
+                  menuRef={menuRef}
+                  openMenu={openMenu}
+                />
+              ) : null}
+            </div>
 
-
-
-            <p className="text-xl">Hey👋, {user?.username}</p>
+            <p className="text-xl">Hey👋, {user?.userName}</p>
 
             <div className="flex gap-6 h-full items-center">
               <div className="relative  w-11 h-11 rounded-full hover:bg-zinc-100 grid place-content-center ">
-              <NavLink to={'/cart'}>
-                <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
-                  {items.length}
-                </span>
-                <MdOutlineShoppingCart size={28} className="text-zinc-500" />
+                <NavLink to={"/cart"}>
+                  <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
+                    {items.length}
+                  </span>
+                  <MdOutlineShoppingCart size={28} className="text-zinc-500" />
                 </NavLink>
               </div>
 
@@ -150,8 +137,6 @@ function Navbar() {
               <div>
                 <CiMenuFries size={25} className="text-zinc-500" />
               </div>
-
-              
             </div>
           </div>
         </div>

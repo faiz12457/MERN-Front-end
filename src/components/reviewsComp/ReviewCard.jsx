@@ -6,6 +6,7 @@ import { userSelectors } from "../../redux-store/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewModal from "./ReviewModel";
 import StarRating from "./StarRating";
+import { selectLoginUser } from "../../redux-store/slices/auth/authSlice";
 
 function ReviewCard({ review, handleDeleteReview,handleUpdate }) {
   const [editValue,setEditValue]=useState(review.comment);
@@ -13,8 +14,8 @@ function ReviewCard({ review, handleDeleteReview,handleUpdate }) {
   const [rating, setRating] = useState(review.rating);
   const [open, setOpen] = useState(false);
   const cardRef = useRef(null);
-  const { selectUser } = userSelectors;
-  const User = useSelector(selectUser);
+  
+  const User = useSelector(selectLoginUser);
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
 
@@ -55,7 +56,7 @@ function ReviewCard({ review, handleDeleteReview,handleUpdate }) {
           />
         ) : (
           <>
-            <div className="flex gap-0.5">
+            <div className="flex gap-0.5 ">
               {Array.from({ length: 5 }).map((_, idx) => {
                 return (
                   <IoIosStar
@@ -71,7 +72,7 @@ function ReviewCard({ review, handleDeleteReview,handleUpdate }) {
           </>
         )}
 
-        <p className="text-zinc-500 font-medium ml-auto">{formatted}</p>
+        <p className="text-zinc-500 font-medium ml-auto ">{formatted}</p>
       </div>
       {edit ? (
         <EditReview setEdit={setEdit} id={review._id} rating={rating} editValue={editValue} setEditValue={setEditValue} handleUpdate={handleUpdate} />
@@ -83,7 +84,7 @@ function ReviewCard({ review, handleDeleteReview,handleUpdate }) {
         <div
           ref={cardRef}
           onClick={() => setOpen(true)}
-          className="w-10 absolute top-3 right-2.5 h-10 rounded-full flex justify-center cursor-pointer transition-all duration-100 items-center hover:bg-zinc-100"
+          className="w-10 absolute top-0.5 right-2 h-10 rounded-full flex justify-center cursor-pointer transition-all duration-100 items-center hover:bg-zinc-100"
         >
           <BsThreeDotsVertical className="text-xl" />
         </div>

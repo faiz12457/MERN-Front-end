@@ -1,23 +1,35 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./components/loginComp/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/homeComp/Home";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Product from "./components/productsComp/Products.jsx";
 import Cart from "./components/cartComp/Cart.jsx";
 import Orders from "./components/ordersComp/Orders.jsx";
-import Register from "./components/loginComp/Register.jsx";
 import AppLayout from "./components/AppLayout";
-import GoogleSuccessPage from "./components/GoogleSuccessPage.jsx";
 import ProductDetailPage from "./components/productsComp/ProductDetailPage.jsx";
 import Profile from "./components/profileComp/Profile.jsx";
 import Checkout from "./components/checkoutComp/Checkout.jsx";
 import OrderSuccess from "./components/ordersComp/OrderSuccess.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
+import ProtectedRoute from "./Routes/ProtectedRoute.jsx";
+import { Login } from "./features/auth/Login.jsx";
+import { Register } from "./features/auth/Register.jsx";
+import { GoogleSuccess } from "./features/auth/GoogleSuccess.jsx";
+import { ResetPassword } from "./features/auth/ResetPassword.jsx";
+import { ForgotPassword } from "./features/auth/ForgotPassword.jsx";
+import { VerifyOpt } from "./features/auth/VerifyOpt.jsx";
+import { useFetchUser } from "./components/hooks/useFetchUser.js";
+import { useSelector } from "react-redux";
+import { selectLoginStatus } from "./redux-store/slices/auth/authSlice.js";
+import Loader from "./loaders/Loader.jsx";
 
 function App() {
+   useFetchUser();
+  
+   
+   
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -86,9 +98,25 @@ function App() {
     },
     {
       path: "/google/success",
-      element: <GoogleSuccessPage />,
+      element: <GoogleSuccess />,
+    },
+  
+    {
+      path: "/forgotPassword",
+      element: <ForgotPassword />,
+    },
+
+    {
+      path: "/reset-password/:userId",
+      element: <ResetPassword />,
+    },
+
+    {
+      path: "/verifyOtp",
+      element: <VerifyOpt />,
     },
   ]);
+
   return (
     <>
       <RouterProvider router={router} />

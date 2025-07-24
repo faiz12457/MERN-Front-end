@@ -54,7 +54,7 @@ function Panigation({currentPage,setCurrPage,totalPages=11}) {
                   border-zinc-400
                   ${currentPage===page&&"bg-zinc-300"}
                    cursor-pointer border-[1px]
-                    rounded-sm ${page==="..." ?"bg-white cursor-default border-none":""}`}
+                    rounded-sm ${page==="..." ?"bg-white cursor-default   border-none":""}`}
                 >
                  {page}
                 </button>)

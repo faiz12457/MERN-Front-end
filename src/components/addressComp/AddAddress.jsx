@@ -6,7 +6,7 @@ function AddAddress({setFalse,handleChange:register}) {
     async function onSubmit(values,actions) {
         const obj={
             ...values,
-            user:localStorage.getItem("token")
+            user:localStorage.getItem("accessToken")
         }
             register(obj)
  actions.resetForm();

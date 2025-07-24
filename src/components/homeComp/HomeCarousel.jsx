@@ -40,7 +40,7 @@ function HomeCarousel() {
 
   return (
     <>
-      <div className="w-full h-[500px] overflow-hidden relative">
+      <div className="w-full max-h-[500px] overflow-hidden  relative">
         <div
           className="flex w-full h-full transition-transform  ease-out duration-500"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -49,7 +49,7 @@ function HomeCarousel() {
             <img
               src={img}
               key={index}
-              className="w-full h-full object-cover flex-shrink-0"
+              className="w-full h-auto object-cover flex-shrink-0"
             />
           ))}
         </div>
