@@ -116,7 +116,13 @@ const authSlice = createSlice({
 
     resetLoggedInStatus:(state)=>{
       state.loggedInStatus='idle'
+    },
+
+    setUserVerfied:(state)=>{
+      state.loginUser.isVerified=true
     }
+
+
   },
 
   extraReducers: (builder) => {
@@ -218,6 +224,7 @@ export const {
   resetVerifyOtpStatus,
   resetVerifyOtpErrors,
   resetLoggedInStatus,
+  setUserVerfied,
 } = authSlice.actions;
 
 export const selectLoginStatus = (state) => state.authSlice.loginStatus;

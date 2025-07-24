@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Otp2 from "./OTP";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getCurrentUserThunk,
   getOtpThunk,
   resetOtpStatus,
   resetVerifyOtpErrors,
@@ -13,6 +14,7 @@ import {
   selectOtpStatus,
   selectVerifyOtpErrors,
   selectVerifyOtpStatus,
+  setUserVerfied,
   verifyOtpThunk,
 } from "../../redux-store/slices/auth/authSlice";
 import { Slide, toast } from "react-toastify";
@@ -42,7 +44,7 @@ export const VerifyOpt=()=> {
     
 
     if (verifyOtpStatus == "fullfilled") {
-      navigate("/");
+       dispatch(setUserVerfied());
       toast.success("OTP Verified", {
         position: "top-center",
         autoClose: 1000,
@@ -55,12 +57,14 @@ export const VerifyOpt=()=> {
         transition: Slide,
       });
 
+       navigate("/");
+
     }
 
-         return()=>{
-           dispatch(resetVerifyOtpStatus());
-           dispatch(resetVerifyOtpErrors());
-          }
+      dispatch(resetVerifyOtpStatus());
+       dispatch(resetVerifyOtpErrors());
+           
+          
   }, [verifyOtpStatus]);
 
   useEffect(() => {

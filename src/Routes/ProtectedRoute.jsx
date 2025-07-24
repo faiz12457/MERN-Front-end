@@ -16,6 +16,8 @@ function ProtectedRoute({ Component }) {
       navigate("/verifyOtp");
       return;
     }
+
+    
   }, [loginUser]);
 
   return <>{Component}</>;
