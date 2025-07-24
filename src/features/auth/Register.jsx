@@ -3,9 +3,10 @@ import AuthInput from "../../components/AuthInput";
 import AuthButton from "../../components/AuthButton";
 import { motion } from "motion/react";
 import { NavLink, useNavigate } from "react-router-dom";
+import Lottie from 'lottie-react'
 import { useFormik } from "formik";
 import { Slide, toast } from "react-toastify";
-
+import ecommerceOutlookAnimation from "../../assets/animations/ecommerceLookOut.json"
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUserThunk, resetRegisterUserErrors, resetRegisterUserStatus, selectLoginUser, selectRegisterUserErrors, selectRegisterUserStatus } from "../../redux-store/slices/auth/authSlice";
@@ -110,10 +111,12 @@ export function Register() {
 
   return (
     <div className="flex w-full">
-      <div className="animation w-1/2  bg-black min-h-screen ">
-
-        vgd
-      </div>
+     <div className="animation w-1/2 flex justify-center items-center overflow-hidden h-screen  bg-black  ">
+           <div>
+             <Lottie animationData={ecommerceOutlookAnimation}/>
+     
+           </div>
+           </div>
 
       <div className="login-form w-1/2   flex flex-col  justify-center items-center ">
         {/*Title*/}

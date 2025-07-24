@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import AuthInput from "../../components/AuthInput";
 import AuthButton from "../../components/AuthButton";
 import { useFormik } from "formik";
+import Lottie from 'lottie-react'
 import { motion } from "motion/react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
-
+import ecommerceOutlookAnimation from "../../assets/animations/ecommerceLookOut.json"
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -124,7 +125,12 @@ export function Login() {
   const { email, password } = values;
   return (
     <div className="flex w-full h-screen">
-      <div className="animation w-1/2 bg-black h-full "></div>
+      <div className="animation w-1/2 flex justify-center items-center overflow-hidden   bg-black h-full ">
+      <div>
+        <Lottie animationData={ecommerceOutlookAnimation}/>
+
+      </div>
+      </div>
 
       <div className="login-form w-1/2  h-full flex flex-col justify-center items-center ">
         {/*Title*/}
