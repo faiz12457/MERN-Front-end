@@ -1,6 +1,6 @@
 import React from 'react'
 import Subtotal from './Subtotal'
-import CartItems from './cartItems'
+import CartItems from './CartItems'
 
 
 function Cart() {
