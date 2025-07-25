@@ -6,12 +6,14 @@ import ProtectedRoute from "../Routes/ProtectedRoute";
 import { selectLoggedInStatus } from "../redux-store/slices/auth/authSlice";
 import Loader from "../loaders/Loader";
 import { useSelector } from "react-redux";
+import { useFetchUser } from "./hooks/useFetchUser";
 
 
 
 function AppLayout() {
+  useFetchUser();
  const status=useSelector(selectLoggedInStatus);
-
+  
  if(status=='pending'){
   return <div className="w-full h-screen grid place-content-center">
 <Loader />

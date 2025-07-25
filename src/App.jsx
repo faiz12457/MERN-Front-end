@@ -19,13 +19,10 @@ import { GoogleSuccess } from "./features/auth/GoogleSuccess.jsx";
 import { ResetPassword } from "./features/auth/ResetPassword.jsx";
 import { ForgotPassword } from "./features/auth/ForgotPassword.jsx";
 import { VerifyOpt } from "./features/auth/VerifyOpt.jsx";
-import { useFetchUser } from "./components/hooks/useFetchUser.js";
-import { useSelector } from "react-redux";
-import { selectLoginStatus } from "./redux-store/slices/auth/authSlice.js";
-import Loader from "./loaders/Loader.jsx";
+
 
 function App() {
-   useFetchUser();
+  
   
    
    

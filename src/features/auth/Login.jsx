@@ -20,6 +20,7 @@ import {
 } from "../../redux-store/slices/auth/authSlice";
 import { LoginSchema } from "../../yupSchema/loginSchema";
 import { userSelectors } from "../../redux-store/slices/user/userSlice";
+import { useFetchUser } from "../../components/hooks/useFetchUser";
 
 export function Login() {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ export function Login() {
         theme: "light",
         transition: Slide,
       });
+     
       navigate("/");
     }
 

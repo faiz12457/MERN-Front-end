@@ -1,5 +1,5 @@
 import api from "../../../../api";
-const token=localStorage.getItem("accessToken");
+
 export const getCartItems = async (id) => {
   try {
     const res = await api.get(`/cart/items/${id}`);
@@ -41,7 +41,7 @@ export const updateCartItem = async (data) => {
 export const deleteAllCart=async()=>{
   
   try { 
-    
+    const token=localStorage.getItem("accessToken");
      const res=await api.delete(`/cart/deleteAll/${token}`);
      return res.data
   } catch (error) {
