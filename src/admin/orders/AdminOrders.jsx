@@ -3,6 +3,7 @@ import { getAllOrderThunk, orderSelectors } from '../../redux-store/slices/order
 import { useDispatch, useSelector } from 'react-redux'
 import OrderTable from './OrderTable';
 import Loader from '../../loaders/Loader';
+import SkeletonOrderTable from './SkeletonOrderTable';
 
 function AdminOrders() {
    const {selectAllOrders,selectAllOrdersStatus}=orderSelectors
@@ -17,15 +18,16 @@ function AdminOrders() {
 
    if(status=='pending'){
     return(
-      <div className='grid place-content-center w-full h-screen '>
-        <Loader />
-      </div>
+     <div className='mt-20 px-5'>
+      <SkeletonOrderTable />
+     </div>
     )
    }
   return (
     <div className='mt-20 px-5'>
 
       <OrderTable orders={orders} />
+       
     </div>
   )
 }

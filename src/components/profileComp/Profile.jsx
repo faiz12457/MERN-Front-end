@@ -11,12 +11,14 @@ import {
   registerUserAddressThunk,
   resetAddressAddStatus,
   resetAddressErrors,
+  resetAddressStatus,
   resetAddressSuccessMessage,
   updateUserAddressThunk,
 } from "../../redux-store/slices/address/addressSlice";
 import { Slide, toast } from "react-toastify";
 import { UpdateAddress } from "../addressComp/UpdateAddress";
 import Loader from "../../loaders/Loader";
+import SkeletonProfileAddress from "./SkeletonProfile";
 
 function Profile() {
   const [addAddress, setAddAddress] = useState(false);
@@ -40,19 +42,14 @@ function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    toast.success(successMsg, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      theme: "light",
-      transition: Slide,
-    });
-    dispatch(resetAddressSuccessMessage());
-  }, [successMsg]);
+    dispatch(fetchUserAddress());
+  }, []);
+
+  useEffect(() => {
+    if (status == "succeed") {
+      dispatch(resetAddressStatus());
+    }
+  }, [status]);
 
   useEffect(() => {
     if (registerStatus === "succeed") {
@@ -60,9 +57,6 @@ function Profile() {
     }
     dispatch(resetAddressAddStatus());
   }, [registerStatus]);
-
-     
-  
 
   function handleregisterAddress(data) {
     dispatch(registerUserAddressThunk(data));
@@ -76,21 +70,23 @@ function Profile() {
     dispatch(deleteUserAddressThunk());
   }
 
- 
-
-
-  if (status === "loading ") {
+  if (status == "loading") {
     return (
-      <div className="w-full  h-screen grid place-content-center">
-        <Loader />
+      <div
+        className="w-[800px]  p-4 mt-20 z-0 mx-auto  rounded-2xl"
+        style={{
+          boxShadow:
+            "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
+        }}
+      >
+        <SkeletonProfileAddress />
       </div>
     );
-  } 
+  }
 
-  
   return (
     <div
-      className="w-[800px]  p-4 mt-20 z-0 mx-auto  rounded-2xl"
+      className="w-[800px]   p-4 mt-20 z-0 mx-auto  rounded-2xl"
       style={{
         boxShadow:
           "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",

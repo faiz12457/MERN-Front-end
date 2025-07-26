@@ -61,10 +61,11 @@ function AdminProduct({ Product }) {
         </div>
 
         <div className=" flex justify-end gap-3">
+        <NavLink to={`/admin/updateProduct/${id}`}>
           <button className="p-4 flex active:scale-95  transition-all  justify-center items-center h-9 rounded bg-black cursor-pointer text-white font-semibold hover:bg-[#DB4444]">
             Update
           </button>
-
+         </NavLink>
           <button
             onClick={isDeleted ? handleRestore : handleSoftDelete}
             className="p-4 h-9 border  border-[#DB4444] active:scale-95  transition-all  flex justify-center items-center uppercase rounded bg-white cursor-pointer text-[#DB4444] font-semibold hover:bg-[#DB4444] hover:text-white"
