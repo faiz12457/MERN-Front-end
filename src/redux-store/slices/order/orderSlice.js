@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createOrder, getUserOrder } from "./orderApi";
+import {
+  createOrder,
+  getAllOrders,
+  getUserOrder,
+  updateOrderStatus,
+} from "./orderApi";
 
 const initialState = {
   createOrderStatus: "idle",
@@ -8,6 +13,8 @@ const initialState = {
   errors: null,
   userOrders: [],
   userOrdersStatus: "idle",
+  orders: [],
+  ordersStatus: "idle",
 };
 
 export const createOrderThunk = createAsyncThunk(
@@ -22,6 +29,19 @@ export const getUserOrderThunk = createAsyncThunk("/userOrder", async () => {
   const res = await getUserOrder();
   return res;
 });
+
+export const getAllOrderThunk = createAsyncThunk("/order/all", async () => {
+  const res = await getAllOrders();
+  return res;
+});
+
+export const updateOrderStatusThunk = createAsyncThunk(
+  "/order/updateStatus",
+  async (data) => {
+    const res = await updateOrderStatus(data);
+    return res;
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
@@ -50,6 +70,10 @@ const orderSlice = createSlice({
 
     resetUserOrders: (state) => {
       state.userOrders = [];
+    },
+
+    resetOrdersStatus: (state) => {
+      state.ordersStatus = "idle";
     },
   },
 
@@ -84,6 +108,24 @@ const orderSlice = createSlice({
         state.userOrders = [];
         state.errors = action.error.message;
         state.successMsg = null;
+      })
+      .addCase(getAllOrderThunk.pending, (state) => {
+        state.ordersStatus = "pending";
+      })
+      .addCase(getAllOrderThunk.fulfilled, (state, action) => {
+        state.ordersStatus = "fullfilled";
+        state.orders = action.payload.orders;
+      })
+      .addCase(getAllOrderThunk.rejected, (state) => {
+        state.ordersStatus = "rejected";
+      })
+      .addCase(updateOrderStatusThunk.fulfilled, (state, action) => {
+
+        state.orders = state.orders.map((order) => {
+          return order._id === action.payload.id
+            ? { ...order, status: action.payload.status }
+            : order;
+        });
       });
   },
 });
@@ -93,6 +135,7 @@ export const {
   resetOrderErrors,
   resetOrderId,
   resetSuccessMsg,
+  resetOrdersStatus,
 } = orderSlice.actions;
 
 export const orderSelectors = {
@@ -102,6 +145,8 @@ export const orderSelectors = {
   selectCreateOrderStatus: (state) => state.orderSlice.createOrderStatus,
   selectUserOrdersStatus: (state) => state.orderSlice.userOrdersStatus,
   selectUserOrders: (state) => state.orderSlice.userOrders,
+  selectAllOrders: (state) => state.orderSlice.orders,
+  selectAllOrdersStatus: (state) => state.orderSlice.ordersStatus,
 };
 
 export default orderSlice.reducer;

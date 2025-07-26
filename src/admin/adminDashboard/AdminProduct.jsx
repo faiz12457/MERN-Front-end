@@ -20,6 +20,7 @@ function AdminProduct({ Product }) {
     isDeleted,
   } = Product;
 
+
   const discountPrice = price - price * (discountPercentage / 100);
   const dispatch = useDispatch();
 

@@ -169,6 +169,7 @@ const productSlice = createSlice({
         });
       })
       .addCase(restoreProductThunk.fulfilled, (state, action) => {
+        
         state.adminProducts = state.adminProducts.map((product) => {
           return product._id === action.payload.id
             ? { ...product, isDeleted: false }

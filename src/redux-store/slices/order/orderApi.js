@@ -19,3 +19,27 @@ export const getUserOrder = async () => {
     throw error.response.data;
   }
 };
+
+
+
+export const getAllOrders=async()=>{
+  try {
+     const res=await api.get("/admin/orders");
+     return res.data
+  } catch (error) {
+       throw error.response.data;
+  }
+}
+
+
+export const updateOrderStatus=async(data)=>{
+      const id=data.id;
+      const status=data.status;
+
+      try {
+       const res=await api.post(`/admin/updateOrderStatus/${id}?status=${status}`)
+       return res.data
+      } catch (error) {
+         throw error.response.data;
+      }
+}

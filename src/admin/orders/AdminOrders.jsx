@@ -1,8 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { getAllOrderThunk, orderSelectors } from '../../redux-store/slices/order/orderSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import OrderTable from './OrderTable';
+import Loader from '../../loaders/Loader';
 
 function AdminOrders() {
+   const {selectAllOrders,selectAllOrdersStatus}=orderSelectors
+  const orders=useSelector(selectAllOrders);
+  const status=useSelector(selectAllOrdersStatus);
+  const dispatch=useDispatch();
+
+  
+  useEffect(()=>{
+        dispatch(getAllOrderThunk());
+  },[])
+
+   if(status=='pending'){
+    return(
+      <div className='grid place-content-center w-full h-screen '>
+        <Loader />
+      </div>
+    )
+   }
   return (
-    <div>AdminOrders</div>
+    <div className='mt-20 px-5'>
+
+      <OrderTable orders={orders} />
+    </div>
   )
 }
 
