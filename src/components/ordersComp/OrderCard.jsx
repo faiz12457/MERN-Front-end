@@ -46,10 +46,25 @@ function OrderInfo({title,info}){
 }
 
 function Status({title,status}){
+    
+const statusStyles = {
+  Pending: "bg-yellow-100 text-yellow-800",
+  Dispatched: "bg-blue-100 text-blue-800",
+  "Out for delivery": "bg-purple-100 text-purple-800",
+  Delivered: "bg-green-100 text-green-800",
+  Cancelled: "bg-red-100 text-red-800",
+};
+
     return(
-        <div>
+        <div className='text-center'>
         <p className='text-zinc-700 text-[.9rem] font-medium'>{title}</p>
-        <p className='text-zinc-500 font-medium text-[.8rem]'>{status}</p>
+        <span
+                  className={`text-xs px-3 block py-1 rounded-full text-nowrap font-medium ${
+                    statusStyles[status] || "bg-gray-200 text-gray-700"
+                  }`}
+                >
+                  {status}
+                </span>
         </div>
     )
 }
