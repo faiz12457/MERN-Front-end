@@ -8,11 +8,11 @@ import { getCurrentUserThunk } from "../../redux-store/slices/auth/authSlice";
 
 export const useFetchUser = () => {
   const dispatch = useDispatch();
-  const token = localStorage.getItem("accessToken");
+  
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
     if (token) {
-      dispatch(getCurrentUserThunk(token));
       dispatch(fetchUserAddress());
       dispatch(getUserOrderThunk());
       dispatch(getCartItemsThunk(token));

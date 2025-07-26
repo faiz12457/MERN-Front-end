@@ -117,8 +117,9 @@ function Navbar() {
 
             <p className="text-xl">Hey👋, {user?.userName}</p>
 
-            <div className="flex gap-6 h-full items-center">
-              <div className="relative  w-11 h-11 rounded-full hover:bg-zinc-100 grid place-content-center ">
+            <div className="flex gap-6 h-full  items-center">
+              {!user?.isAdmin?
+                <><div className="relative   w-11 h-11 rounded-full hover:bg-zinc-100 grid place-content-center ">
                 <NavLink to={"/cart"}>
                   <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
                     {items.length}
@@ -127,12 +128,14 @@ function Navbar() {
                 </NavLink>
               </div>
 
-              <div className="relative w-11 h-11 rounded-full grid place-content-center hover:bg-zinc-100">
+              <div className="relative  w-11 h-11 rounded-full grid place-content-center hover:bg-zinc-100">
                 <span className="absolute w-5 h-5 -top-[6px] -right-2 rounded-full bg-[#D32F2F] text-white font-semibold inline-flex justify-center items-center text-xs">
                   1
                 </span>
                 <FaRegHeart size={25} className="text-zinc-500" />
               </div>
+              </>:<button className= " hover:bg-[#DB4444] transition-all  w-20 bg-black  text-white h-9 rounded font-semibold text-xs cursor-pointer ">ADMIN</button>
+               }
 
               <div>
                 <CiMenuFries size={25} className="text-zinc-500" />

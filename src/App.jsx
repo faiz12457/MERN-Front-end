@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/homeComp/Home";
 import About from "./pages/About.jsx";
@@ -19,100 +19,150 @@ import { GoogleSuccess } from "./features/auth/GoogleSuccess.jsx";
 import { ResetPassword } from "./features/auth/ResetPassword.jsx";
 import { ForgotPassword } from "./features/auth/ForgotPassword.jsx";
 import { VerifyOpt } from "./features/auth/VerifyOpt.jsx";
-
+import CreateProduct from "./admin/createProduct/CreateProduct.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrentUserThunk,
+  selectLoggedInStatus,
+  selectLoginUser,
+} from "./redux-store/slices/auth/authSlice.js";
+import AdminDashborad from "./admin/adminDashboard/AdminDashborad.jsx";
+import AdminOrders from "./admin/orders/AdminOrders.jsx";
+import UpdateProducts from "./admin/updateProducts/UpdateProducts.jsx";
+import Loader from "./loaders/Loader.jsx";
 
 function App() {
-  
-  
-   
-   
+  const user = useSelector(selectLoginUser);
+  const status = useSelector(selectLoggedInStatus);
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <AppLayout />,
-      errorElement:<ErrorPage />,
-      children: [
-        {
-          path: "/",
-          element: <ProtectedRoute Component={<Home />} />,
-        },
-        {
-          path: "/profile",
-          element: <ProtectedRoute Component={<Profile />} />,
-        },
-        {
-          path: "/product-detail/:id",
-          element: <ProtectedRoute Component={<ProductDetailPage />} />,
-        },
+  const dispatch = useDispatch();
 
-        {
-          path: "/about",
-          element: <ProtectedRoute Component={<About />} />,
-        },
+  useEffect(() => {
+    
+    const token = localStorage.getItem("accessToken");
+    if(token) dispatch(getCurrentUserThunk(token));
+  }, []);
 
-        {
-          path: "/contact",
-          element: <ProtectedRoute Component={<Contact />} />,
-        },
+  const router = useMemo(() => {
+    return createBrowserRouter([
+      {
+        path: "/",
+        element: <AppLayout />,
+        errorElement: <ErrorPage />,
+        children: !user?.isAdmin
+          ? [
+              {
+                path: "/",
+                element: <ProtectedRoute Component={<Home />} />,
+              },
+              {
+                path: "/profile",
+                element: <ProtectedRoute Component={<Profile />} />,
+              },
+              {
+                path: "/product-detail/:id",
+                element: <ProtectedRoute Component={<ProductDetailPage />} />,
+              },
 
-        {
-          path: "/product/:id",
-          element: <ProtectedRoute Component={<Product />} />,
-        },
+              {
+                path: "/about",
+                element: <ProtectedRoute Component={<About />} />,
+              },
 
-        {
-          path: "/cart",
-          element: <ProtectedRoute Component={<Cart />} />,
-        },
+              {
+                path: "/contact",
+                element: <ProtectedRoute Component={<Contact />} />,
+              },
 
-        {
-          path: "/orders",
-          element: <ProtectedRoute Component={<Orders />} />,
-        },
-        {
-          path: "/checkout",
-          element: <ProtectedRoute Component={<Checkout />} />,
-        },
+              {
+                path: "/product/:id",
+                element: <ProtectedRoute Component={<Product />} />,
+              },
 
-        {
-          path:'/order-success/:id',
-          element:<ProtectedRoute Component={<OrderSuccess />} />
-        }
-      ],
-    },
+              {
+                path: "/cart",
+                element: <ProtectedRoute Component={<Cart />} />,
+              },
 
-   
+              {
+                path: "/orders",
+                element: <ProtectedRoute Component={<Orders />} />,
+              },
+              {
+                path: "/checkout",
+                element: <ProtectedRoute Component={<Checkout />} />,
+              },
 
-    {
-      path: "/login",
-      element: <Login />,
-    },
+              {
+                path: "/order-success/:id",
+                element: <ProtectedRoute Component={<OrderSuccess />} />,
+              },
+            ]
+          : [
+              {
+                path: "/",
+                element: <ProtectedRoute Component={<AdminDashborad />} />,
+              },
 
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/google/success",
-      element: <GoogleSuccess />,
-    },
-  
-    {
-      path: "/forgotPassword",
-      element: <ForgotPassword />,
-    },
+              {
+                path: "/admin/addProduct",
+                element: <ProtectedRoute Component={<CreateProduct />} />,
+              },
+              {
+                path: "/admin/profile",
+                element: <ProtectedRoute Component={<CreateProduct />} />,
+              },
 
-    {
-      path: "/reset-password/:userId",
-      element: <ResetPassword />,
-    },
+              {
+                path: "/admin/orders",
+                element: <ProtectedRoute Component={<AdminOrders />} />,
+              },
 
-    {
-      path: "/verifyOtp",
-      element: <VerifyOpt />,
-    },
-  ]);
+              {
+                path: "/admin/updateProduct/:id",
+                element: <ProtectedRoute Component={<UpdateProducts />} />,
+              },
+            ],
+      },
+
+      {
+        path: "/login",
+        element: <Login />,
+      },
+
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/google/success",
+        element: <GoogleSuccess />,
+      },
+
+      {
+        path: "/forgotPassword",
+        element: <ForgotPassword />,
+      },
+
+      {
+        path: "/reset-password/:userId",
+        element: <ResetPassword />,
+      },
+
+      {
+        path: "/verifyOtp",
+        element: <VerifyOpt />,
+      },
+    ]);
+  }, [user?.isAdmin]);
+
+  if (status == "pending") {
+    return (
+      <div className="w-full h-screen grid place-content-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <>

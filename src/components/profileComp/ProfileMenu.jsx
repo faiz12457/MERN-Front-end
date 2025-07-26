@@ -3,15 +3,32 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logoutThunk, resetLoginUser, resetLogoutStatus, selectLogoutErrors, selectLogoutStatus } from "../../redux-store/slices/auth/authSlice";
+import {
+  logoutThunk,
+  resetLoginUser,
+  resetLogoutStatus,
+  selectLoginUser,
+  selectLogoutErrors,
+  selectLogoutStatus,
+} from "../../redux-store/slices/auth/authSlice";
 import { resetUser } from "../../redux-store/slices/user/userSlice";
-const settings = [
-  { name: "Home", to: "/" },
-  { name: "Profile", to: "/profile" },
-  { name: "My orders", to: "/orders" },
-  { name: "Logout", to: "/logout" },
-];
-function ProfileMenu({ setIsOpen, menuRef, openMenu}) {
+
+function ProfileMenu({ setIsOpen, menuRef, openMenu }) {
+  const loginUser = useSelector(selectLoginUser);
+  const settings = [
+    { name: "Home", to: "/" },
+    { name: "Profile", to: loginUser?.isAdmin ? "/admin/profile" : "/profile" },
+    {
+      name: loginUser?.isAdmin ? "Orders" : "My orders",
+      to: loginUser?.isAdmin ? "/admin/orders" : "/orders",
+    },
+    { name: "Logout", to: "/logout" },
+  ];
+
+  if (loginUser?.isAdmin) {
+    settings.unshift({ name: "Add new Product", to: "/admin/addProduct" });
+  }
+
   const [left, setLeft] = useState(null);
 
   function updatePosition() {
@@ -34,8 +51,7 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu}) {
     return () => window.removeEventListener("resize", handleResize);
   }, [openMenu, menuRef]);
 
-
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const logoutStatus = useSelector(selectLogoutStatus);
   const logoutErrors = useSelector(selectLogoutErrors);
   const navigate = useNavigate();
@@ -60,7 +76,7 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu}) {
         } `}
       >
         <div
-          className={`w-28 rounded-xs bg-white pt-1 absolute top-[60px]`}
+          className={` rounded-xs bg-white pt-1 absolute top-[60px]`}
           style={{
             left: `${left}px`,
             boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
@@ -75,7 +91,7 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu}) {
               >
                 <div
                   onClick={setting.name === "Logout" ? handleLogout : undefined}
-                  className="w-full h-9 hover:bg-zinc-100  flex items-center   text-zinc-900  pl-2.5 font-medium text-[1rem]"
+                  className="w-full h-9 hover:bg-zinc-100  flex items-center   text-zinc-900  px-2.5 font-medium text-[1rem]"
                 >
                   {setting.name}
                 </div>
