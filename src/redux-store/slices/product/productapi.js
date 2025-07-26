@@ -31,7 +31,39 @@ export async function createProduct(formData) {
     });
 
     return res.data;
-    
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export async function getAdminProducts(data) {
+  let queryString = "";
+  queryString += `page=${data.panigation.page}&pagesize=${data.panigation.pageSize}&`;
+  queryString += `sort=${data.sort.sort}&order=${data.sort.order}`;
+  try {
+    const res = await api.get(`/admin/products?${queryString}`);
+
+    return res.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export async function deleteProduct(id) {
+  try {
+    const res = await api.delete(`/admin/softDelete/${id}`);
+
+    return res.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export async function restoreProduct(id) {
+  try {
+    const res = await api.post(`/admin/restore/${id}`);
+
+    return res.data;
   } catch (error) {
     throw error.response.data;
   }

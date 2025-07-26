@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createProduct, getAllProducts, getSingleProduct } from "./productapi";
+import {
+  createProduct,
+  deleteProduct,
+  getAdminProducts,
+  getAllProducts,
+  getSingleProduct,
+  restoreProduct,
+} from "./productapi";
 
 const initialState = {
   products: [],
@@ -11,6 +18,10 @@ const initialState = {
   totalResults: 0,
   createProductStatus: "idle",
   createProductError: null,
+  adminProducts: [],
+  adminProductsStatus: "idle",
+  adminProductsError: null,
+  adminTotalResults: 0,
 };
 
 export const fetchAllProducts = createAsyncThunk("/products", async (data) => {
@@ -30,6 +41,30 @@ export const createProductThunk = createAsyncThunk(
   "/product/create",
   async (formData) => {
     const res = await createProduct(formData);
+    return res;
+  }
+);
+
+export const getAdminProductThunk = createAsyncThunk(
+  "/products/admin",
+  async (data) => {
+    const res = await getAdminProducts(data);
+    return res;
+  }
+);
+
+export const restoreProductThunk = createAsyncThunk(
+  "/product/restore",
+  async (id) => {
+    const res = await restoreProduct(id);
+    return res;
+  }
+);
+
+export const softDeleteThunk = createAsyncThunk(
+  "/product/softDelete",
+  async (id) => {
+    const res = await deleteProduct(id);
     return res;
   }
 );
@@ -55,6 +90,12 @@ const productSlice = createSlice({
     },
     resetCreateProductError: (state) => {
       state.createProductError = null;
+    },
+    resetAdminProductStatus: (state) => {
+      state.adminProductsStatus = "idle";
+    },
+    resetAdminProductError: (state) => {
+      state.adminProductsError = null;
     },
   },
 
@@ -105,6 +146,34 @@ const productSlice = createSlice({
       .addCase(createProductThunk.rejected, (state, action) => {
         state.createProductStatus = "rejected";
         state.createProductError = action.error.message;
+      })
+      .addCase(getAdminProductThunk.pending, (state) => {
+        state.adminProductsStatus = "pending";
+        state.adminProductsError = null;
+      })
+      .addCase(getAdminProductThunk.fulfilled, (state, action) => {
+        state.adminProductsStatus = "fullfilled";
+        state.adminProductsError = null;
+        state.adminProducts = action.payload.data;
+        state.adminTotalResults = action.payload.totalResults;
+      })
+      .addCase(getAdminProductThunk.rejected, (state, action) => {
+        state.adminProductsStatus = "rejected";
+        state.adminProductsError = action.error.message;
+      })
+      .addCase(softDeleteThunk.fulfilled, (state, action) => {
+        state.adminProducts = state.adminProducts.map((product) => {
+          return product._id === action.payload.id
+            ? { ...product, isDeleted: true }
+            : product;
+        });
+      })
+      .addCase(restoreProductThunk.fulfilled, (state, action) => {
+        state.adminProducts = state.adminProducts.map((product) => {
+          return product._id === action.payload.id
+            ? { ...product, isDeleted: false }
+            : product;
+        });
       });
   },
 });
@@ -116,6 +185,8 @@ export const {
   resetSingleProductStatus,
   resetCreateProductError,
   resetCreateProductStatus,
+  resetAdminProductStatus,
+  resetAdminProductError,
 } = productSlice.actions;
 
 export const productSelectors = {
@@ -128,6 +199,10 @@ export const productSelectors = {
   selectTotalResults: (state) => state.productSlice.totalResults,
   selectCreateProductStatus: (state) => state.productSlice.createProductStatus,
   selectCreateProductError: (state) => state.productSlice.clearProductErrors,
+  selectAdminProductStatus: (state) => state.productSlice.adminProductsStatus,
+  selectAdminProductError: (state) => state.productSlice.adminProductsError,
+  selectAdminProducts: (state) => state.productSlice.adminProducts,
+  selectAdminProductResults: (state) => state.productSlice.adminTotalResults,
 };
 
 export default productSlice.reducer;
