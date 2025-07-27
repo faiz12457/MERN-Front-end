@@ -68,3 +68,15 @@ export async function restoreProduct(id) {
     throw error.response.data;
   }
 }
+
+
+export const updateProduct=async(data)=>{
+  try {
+     const res=await api.post(`/admin/updateProduct/${data.id}`,data.formData);
+     return res.data;
+  } catch (error) {
+    console.log(error)
+    throw error.response.data;
+    
+  }
+}

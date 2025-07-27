@@ -25,7 +25,7 @@ function CreateProduct() {
     actionsRef.current = actions;
 
     values["name"] = values.name.trim();
-    values["cateogry"] = values.category.trim();
+    values["category"] = values.category.trim();
     values["sizes"] = values.sizes.map((v) => v.trim().toUpperCase());
     values["colorsAvailable"] = values.colorsAvailable.map((v) =>
       v.trim().toLowerCase()

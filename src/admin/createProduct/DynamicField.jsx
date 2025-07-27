@@ -5,7 +5,7 @@ function DynamicField({ label, field, values, errors, arrayHelpers }) {
   return (
      <div>
           <label className="block text-sm font-medium mb-1">{label}</label>
-          {values.map((val, idx) => (
+          {values?.map((val, idx) => (
             <div key={idx} className="flex items-center gap-2 mb-2">
               <input
                 type="text"

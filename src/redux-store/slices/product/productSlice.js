@@ -6,7 +6,9 @@ import {
   getAllProducts,
   getSingleProduct,
   restoreProduct,
+  updateProduct,
 } from "./productapi";
+import { UpdateProductSchema } from "../../../yupSchema/updateProductSchema";
 
 const initialState = {
   products: [],
@@ -22,6 +24,7 @@ const initialState = {
   adminProductsStatus: "idle",
   adminProductsError: null,
   adminTotalResults: 0,
+  updateProductStatus: "idle",
 };
 
 export const fetchAllProducts = createAsyncThunk("/products", async (data) => {
@@ -69,6 +72,14 @@ export const softDeleteThunk = createAsyncThunk(
   }
 );
 
+export const updateProductThunk = createAsyncThunk(
+  "/product/update",
+  async (data) => {
+    const res = await updateProduct(data);
+    return res;
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState,
@@ -85,6 +96,10 @@ const productSlice = createSlice({
     resetSingleProductStatus: (state) => {
       state.singleProductStatus = "idle";
     },
+
+    resetSingleProduct: (state) => {
+      state.singleProduct = null;
+    },
     resetCreateProductStatus: (state) => {
       state.createProductStatus = "idle";
     },
@@ -96,6 +111,9 @@ const productSlice = createSlice({
     },
     resetAdminProductError: (state) => {
       state.adminProductsError = null;
+    },
+    resetUpdateProductStatus: (state) => {
+      state.updateProductStatus = "idle";
     },
   },
 
@@ -169,12 +187,21 @@ const productSlice = createSlice({
         });
       })
       .addCase(restoreProductThunk.fulfilled, (state, action) => {
-        
         state.adminProducts = state.adminProducts.map((product) => {
           return product._id === action.payload.id
             ? { ...product, isDeleted: false }
             : product;
         });
+      })
+      .addCase(updateProductThunk.pending, (state) => {
+        state.updateProductStatus = "pending";
+      })
+      .addCase(updateProductThunk.fulfilled, (state, action) => {
+        state.updateProductStatus = "fullfilled";
+        state.singleProduct = action.payload.updatedProduct;
+      })
+      .addCase(updateProductThunk.rejected, (state) => {
+        state.updateProductStatus = "rejected";
       });
   },
 });
@@ -188,6 +215,8 @@ export const {
   resetCreateProductStatus,
   resetAdminProductStatus,
   resetAdminProductError,
+  resetSingleProduct,
+  resetUpdateProductStatus,
 } = productSlice.actions;
 
 export const productSelectors = {
@@ -204,6 +233,7 @@ export const productSelectors = {
   selectAdminProductError: (state) => state.productSlice.adminProductsError,
   selectAdminProducts: (state) => state.productSlice.adminProducts,
   selectAdminProductResults: (state) => state.productSlice.adminTotalResults,
+  selectUpdateProductStatus: (state) => state.productSlice.updateProductStatus,
 };
 
 export default productSlice.reducer;
