@@ -46,7 +46,6 @@ function Navbar() {
         navigate("/login");
          }
   
-         console.log(logoutStatus)
     },[logoutStatus])
   // useFetchUser
 
