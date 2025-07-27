@@ -26,7 +26,7 @@ import {
   getCartItemsThunk,
 } from "../../redux-store/slices/cart/cartSlice";
 import { useFetchUser } from "../hooks/useFetchUser";
-import { selectLoginUser } from "../../redux-store/slices/auth/authSlice";
+import { resetLoginUser, resetLogoutStatus, selectLoginUser, selectLogoutStatus } from "../../redux-store/slices/auth/authSlice";
 
 function Navbar() {
   const menuRef = useRef(null);
@@ -35,6 +35,19 @@ function Navbar() {
   const { selectCartItems } = cartSelectors;
   const items = useSelector(selectCartItems);
   const token = localStorage.getItem("token");
+  
+  const logoutStatus = useSelector(selectLogoutStatus);
+
+   useEffect(()=>{
+         if(logoutStatus=='fullfilled'){
+          localStorage.removeItem("accessToken");
+        dispatch(resetLogoutStatus());
+        dispatch(resetLoginUser());
+        navigate("/login");
+         }
+  
+         console.log(logoutStatus)
+    },[logoutStatus])
   // useFetchUser
 
   function handleMenu() {

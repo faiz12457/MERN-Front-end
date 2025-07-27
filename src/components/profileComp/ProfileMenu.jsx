@@ -56,15 +56,11 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu }) {
   const logoutErrors = useSelector(selectLogoutErrors);
   const navigate = useNavigate();
 
-  async function handleLogout() {
-    const resultAction = await dispatch(logoutThunk().unwrap());
+ 
 
-    if (logoutThunk.fulfilled.match(resultAction)) {
-      localStorage.removeItem("accessToken");
-      dispatch(resetLogoutStatus());
-      dispatch(resetLoginUser());
-      navigate("/login");
-    }
+  async function handleLogout() {
+    dispatch(logoutThunk());
+
   }
   if (openMenu && left === null) return null;
   return createPortal(
