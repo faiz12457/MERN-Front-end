@@ -57,7 +57,7 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu }) {
   const navigate = useNavigate();
 
   async function handleLogout() {
-    const resultAction = await dispatch(logoutThunk());
+    const resultAction = await dispatch(logoutThunk().unwrap());
 
     if (logoutThunk.fulfilled.match(resultAction)) {
       localStorage.removeItem("accessToken");
