@@ -17,9 +17,9 @@ function Subtotal() {
     <div className='flex flex-col gap-4'>
     <div className=' flex items-center bg-white'>
     <div>
-    <p className='text-shadow-zinc-950 text-2xl font-medium'>Subtotal</p>
-    <p className='text-black text-xl'>Total items in cart {items.length}</p>
-    <p className='text-zinc-700'>Shipping and taxes will be calculated at checkout.</p>
+    <p className='text-shadow-zinc-950 text-xl md:text-2xl font-medium'>Subtotal</p>
+    <p className='text-black  text-base md:text-xl'>Total items in cart {items.length}</p>
+    <p className='text-zinc-700 text-xs md:text-xl'>Shipping and taxes will be calculated at checkout.</p>
     </div>
     <p className='ml-auto text-[1.2rem] font-medium text-zinc-950'>${totalCost.toFixed(0)||0}</p>
     </div>

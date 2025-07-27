@@ -66,7 +66,7 @@ function Products() {
           return (
             <div
               key={idx}
-              className="w-72 h-96  bg-gray-200 animate-pulse rounded-md "
+              className="h-96 w-64 md:w-72  bg-gray-200 animate-pulse rounded-md "
             ></div>
           );
         })}
@@ -76,7 +76,7 @@ function Products() {
 
   return (
     <>
-      <div className="w-[90%] mx-auto flex justify-end">
+      <div className="w-[90%]   mt-2 md:mt-0 mx-auto flex justify-end">
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}

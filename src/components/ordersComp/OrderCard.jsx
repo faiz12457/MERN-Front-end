@@ -10,13 +10,22 @@ const options = { month: "short", day: "numeric", year: "numeric" };
 const formatted = date.toLocaleDateString("en-US", options).toUpperCase();
 
   return (
-    <div className='shadow border pb-1.5 w-fit h-fit   border-zinc-200 rounded-2xl'>
-    <div className='h-20 flex  px-7 justify-between'>
-    <div className=' h-full w-full flex gap-5 items-center justify-between'>
+    <div className='shadow border pb-1.5 w-fit h-fit    border-zinc-200 rounded-2xl'>
+    <div className='h-fit sm:h-20 flex p-2  sm:py-0 sm:px-7 justify-between'>
+    <div className=' h-full w-full flex md:gap-5 items-center justify-between'>
+    <div className='flex gap-3 flex-col sm:flex-row w-full justify-between '>
+        <div className='flex gap-2 sm:gap-4 md:w-1/2  justify-between '>
         <OrderInfo title={'Order number'} info={_id}  />
         <OrderInfo title={'Date placed'} info={formatted} />
+
+        </div>
+
+        <div className='flex gap-2 sm:gap-4   md:w-1/2 justify-between '>
         <OrderInfo title={'Total amount'} info={total+".00"} />
         <Status title={'Status'} status={status} />
+
+        </div>
+        </div>
     </div>
    
 
@@ -38,9 +47,9 @@ export default OrderCard
 
 function OrderInfo({title,info}){
     return (
-        <div>
-        <p className='text-zinc-700 text-[.9rem] font-medium'>{title}</p>
-        <p className='text-zinc-500 font-medium text-[.8rem]'>{info}</p>
+        <div className=''>
+        <p className='text-zinc-700 text-sm md:text-[.9rem] text-nowrap font-medium'>{title}</p>
+        <p className='text-zinc-500 text-wrap font-medium text-xs md:text-[.8rem]'>{info}</p>
         </div>
     )
 }
@@ -56,8 +65,8 @@ const statusStyles = {
 };
 
     return(
-        <div className='text-center'>
-        <p className='text-zinc-700 text-[.9rem] font-medium'>{title}</p>
+        <div className='text-center '>
+        <p className='text-zinc-700 text-sm md:text-[.9rem] font-medium'>{title}</p>
         <span
                   className={`text-xs px-3 block py-1 rounded-full text-nowrap font-medium ${
                     statusStyles[status] || "bg-gray-200 text-gray-700"

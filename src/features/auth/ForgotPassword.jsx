@@ -64,7 +64,7 @@ export const ForgotPassword=()=> {
           >
             <div className="flex flex-col gap-4    ">
               <div className="space-y-2">
-                <h5 className="text-3xl font-bold text-black">
+                <h5 className=" text-2xl md:text-3xl font-bold text-black">
                   {" "}
                   Forgot Your Password?
                 </h5>
@@ -95,13 +95,13 @@ export const ForgotPassword=()=> {
         <SentEmailBox />
       )}
       <motion.p
-        className="cursor-pointer text-zinc-800 text-xl mt-2 "
+        className="cursor-pointer ml-1.5 text-zinc-800 text-[1.2rem] mt-2 "
         whileHover={{
           x: "3px",
         }}
       >
         <NavLink to={"/login"}>
-          Go back to <span className="text-[#db4444]">login</span>
+          Go back to <span className= " text-[#db4444] hover:underline">login</span>
         </NavLink>
       </motion.p>
     </div>

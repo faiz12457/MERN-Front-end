@@ -73,7 +73,7 @@ function Profile() {
   if (status == "loading") {
     return (
       <div
-        className="w-[800px]  p-4 mt-20 z-0 mx-auto  rounded-2xl"
+        className=" w-fit md:w-[800px]   p-4 mt-20 z-0 mx-auto  rounded-2xl"
         style={{
           boxShadow:
             "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
@@ -86,7 +86,7 @@ function Profile() {
 
   return (
     <div
-      className="w-[800px]   p-4 mt-20 z-0 mx-auto  rounded-2xl"
+      className= " w-fit md:w-[800px]   p-4 mt-20 z-0 mx-auto  rounded-2xl"
       style={{
         boxShadow:
           "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
@@ -127,7 +127,7 @@ export default Profile;
 function ManageAddress({ setAddAddress }) {
   return (
     <div className="flex justify-center gap-2 my-3.5">
-      <p className="text-2xl text-zinc-700">Manage addresses</p>
+      <p className="text-xl md:text-2xl text-zinc-700">Manage addresses</p>
       <motion.button
         onClick={() => setAddAddress(true)}
         whileHover={{

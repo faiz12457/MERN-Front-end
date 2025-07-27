@@ -36,17 +36,17 @@ const dispatch=useDispatch();
   return (
     <div className="bg-white   border border-l-0 border-r-0 border-b-0 border-t-zinc-200   p-6 flex  gap-2.5  ">
       {/* Image */}
-      <div className="flex-shrink-0 w-40 h-40 relative  shadow  mt-4  bg-gray-50 rounded-lg ">
+      <div className="flex-shrink-0 size-20 md:size-40 relative  shadow  mt-4  bg-gray-50 rounded-lg ">
         <img
           src={images[0]}
           alt={name}
-          className="h-full w-full object-cover  rounded"
+          className=" size-20 md:h-full md:w-full object-cover  rounded"
         />
         <span className=' w-[22px] h-[22px] min-w-fit p-1 absolute -top-2 -right-2 rounded-full bg-zinc-700 z-10 inline-flex justify-center items-center text-zinc-200 text-[.8rem] '>{quantity}</span>
       </div>
 
       {/* Content */}
-      <div className="mt-4  w-[510px]  flex  flex-col">
+      <div className="mt-4 w-full  md:w-[510px]  flex  flex-col">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
@@ -75,14 +75,14 @@ const dispatch=useDispatch();
           <div className="flex space-x-6">
             <NavLink
               to={`/product-detail/${productid}`}
-              className="text-sm font-medium text-indigo-600 hover:underline"
+              className="text-xs md:text-sm text-nowrap font-medium text-indigo-600 hover:underline"
             >
               View product
             </NavLink>
             <a
             onClick={handleCart}
               href="#"
-              className="text-sm font-medium text-indigo-600 hover:underline"
+              className= " text-xs md:text-sm text-nowrap font-medium text-indigo-600 hover:underline"
             >
               Buy again
             </a>

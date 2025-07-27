@@ -5,14 +5,14 @@ import StarRating from "./StarRating";
 function ReviewInput({ setIsReview,handleChange,handleSubmit,reviewmsg,setHover, hover, setRating, rating }) {
   return (
     <div>
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-3  " onSubmit={handleSubmit}>
         <textarea
           value={reviewmsg}
           onChange={handleChange}
           name="review"
           placeholder="Write a review..."
           rows="5"
-          className="w-[612px] h-[138px] pl-2.5 pt-2.5 border border-zinc-500 rounded outline-none "
+          className="w-full h-[138px] pl-2.5 pt-2.5 border border-zinc-500 rounded outline-none "
         ></textarea>
 
         <div className="flex flex-col gap-1.5">

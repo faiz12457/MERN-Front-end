@@ -127,17 +127,19 @@ export function Login() {
   const { email, password } = values;
   return (
     <div className="flex w-full h-screen">
-      <div className="animation w-1/2 flex justify-center items-center overflow-hidden   bg-black h-full ">
+      <div className= "animation hidden md:flex w-1/2  justify-center items-center overflow-hidden   bg-black h-full ">
       <div>
         <Lottie animationData={ecommerceOutlookAnimation}/>
 
       </div>
       </div>
 
-      <div className="login-form w-1/2  h-full flex flex-col justify-center items-center ">
+
+
+      <div className="login-form w-full md:w-1/2   h-full flex flex-col justify-center items-center ">
         {/*Title*/}
         <div className=" w-fit flex flex-col gap-2.5">
-          <p className="text-6xl font-bold">Mern Shop</p>
+          <p className=" text-5xl md:text-6xl font-bold">Mern Shop</p>
           <p className="text-[1rem] text-zinc-700 flex justify-end ">
             - Shop Anything
           </p>
@@ -146,7 +148,7 @@ export function Login() {
 
         {/*Login Form*/}
         <div className="flex flex-col items-center">
-          <form className=" p-5 flex flex-col gap-4" onSubmit={handleSubmit}>
+          <form className=" p-5 w-[350px] md:w-[450px] flex flex-col  gap-4" onSubmit={handleSubmit}>
             <AuthInput
               type="email"
               name={"email"}
@@ -156,6 +158,7 @@ export function Login() {
               errors={errors.email}
               handlechange={handleChange}
               handleblur={handleBlur}
+              
             />
             <AuthInput
               type="password"
@@ -169,7 +172,7 @@ export function Login() {
             />
             <AuthButton title={"LOGIN"} isSubmitting={isSubmitting} />
 
-            <div className="flex justify-between text-[1rem]">
+            <div className="flex  flex-col md:flex-row md:justify-between text-[1rem]">
               <motion.p
                 className="cursor-pointer hover:underline"
                 whileHover={{

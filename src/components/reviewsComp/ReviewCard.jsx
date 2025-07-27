@@ -41,7 +41,7 @@ function ReviewCard({ review, handleDeleteReview,handleUpdate }) {
         boxShadow:
           "rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px",
       }}
-      className=" w-full relative flex flex-col gap-2.5 p-4 "
+      className=" w-[300px] md:w-full relative  flex flex-col gap-2.5 p-4 "
     >
       <div className=" flex flex-col">
         <p className="text-[1.2rem] text-shadow-zinc-900 font-medium">

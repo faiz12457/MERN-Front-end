@@ -55,7 +55,7 @@ export function UpdateAddress({setFalse,handleUpdateAddress}) {
   
   return (
     <form onSubmit={handleSubmit}>
-    <div className='flex flex-col gap-5 mb-3'>
+    <div className='flex w-80 md:w-full flex-col gap-5 mb-3'>
          <AddressInput title={"Type"} name="type" placeholder={"Eg. Home, Business"} errors={errors.type} value={type} touched={touched.type} handlechange={handleChange} handleBlur={handleBlur} />
          <AddressInput title={'Street'} name="street" errors={errors.street} value={street} touched={touched.street} handlechange={handleChange} handleBlur={handleBlur} />
          <AddressInput  title={'Postal Code'} name="postalCode" errors={errors.postalCode} value={postalCode} touched={touched.postalCode} handlechange={handleChange} handleBlur={handleBlur} />

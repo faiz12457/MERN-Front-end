@@ -10,6 +10,7 @@ function AuthInput({
   handleblur,
   touched,
   name,
+  className=""
 }) {
   const [show, setIsShow] = useState(false);
   return (
@@ -25,9 +26,9 @@ function AuthInput({
               stiffness: 200,
             },
           }}
-          className={`w-[420px] border rounded-sm h-14 ${
+          className={`border rounded-sm h-14 ${
             type === "password" && "flex"
-          }`}
+          } ${className}`}
         >
           <input
             type={type === "password" && show ? "text" : type}
@@ -36,7 +37,7 @@ function AuthInput({
             onBlur={handleblur}
             onChange={handlechange}
             placeholder={placeholder}
-            className="w-full px-3 text-[1rem] outline-none h-full border-none "
+            className="w-full  px-3 text-[1rem] outline-none h-full border-none "
           />
           {type === "password" && (
             <span

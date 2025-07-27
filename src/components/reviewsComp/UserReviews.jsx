@@ -109,7 +109,7 @@ function UserReviews() {
   }, []);
 
   return (
-    <div className=" box-border flex flex-col gap-2">
+    <div className=" box-border  w-[320px] md:w-full  flex flex-col gap-2">
       <p className="text-3xl font-medium text-shadow-zinc-950">Reviews</p>
 
       {reviews?.length >= 1 ? (
@@ -171,10 +171,10 @@ function ProgressComp({ ratingPercent, number }) {
   const scale = ratingPercent / 100;
   return (
     <div className="flex box-border  gap-2  items-center">
-      <p className="font-medium">{number} stars</p>
-      <div className="w-[80%] h-4 bg-gray-200 rounded-[8px] overflow-hidden">
+      <p className="font-medium text-nowrap text-[.9rem] mdtext-base">{number} stars</p>
+      <div className="w-[85%] h-4  bg-gray-200 rounded-[8px] overflow-hidden">
         <div
-          className="h-full bg-yellow-400  origin-left transition-transform duration-300"
+          className="h-full  bg-yellow-400  origin-left transition-transform duration-300"
           style={{ transform: `scaleX(${scale})` }}
         ></div>
       </div>

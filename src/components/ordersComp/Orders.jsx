@@ -62,15 +62,17 @@ function Orders() {
   }
   return (
     <div className="mt-20 w-full  ">
+
+  
       <div className="w-fit h-auto flex flex-col gap-5 justify-center items-center mx-auto">
-        <div className=" w-full space-y-1.5">
+        <div className=" w-full space-y-1.5 px-3 sm:px-0">
           <p className="text-zinc-950 text-4xl font-medium">My-Orders</p>
           <p className="text-zinc-400 text-[.9rem] font-medium">
             Check the status of recent orders, manage returns, and discover
             similar products.
           </p>
         </div>
-
+    
         {[...orders].reverse().map((order, idx) => {
           return (
             <OrderCard order={order} key={order._id} userId={order.user._id} />

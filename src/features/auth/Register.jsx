@@ -111,17 +111,17 @@ export function Register() {
 
   return (
     <div className="flex w-full">
-     <div className="animation w-1/2 flex justify-center items-center overflow-hidden h-screen  bg-black  ">
+     <div className="animation hidden md:flex w-1/2 justify-center items-center overflow-hidden h-screen  bg-black  ">
            <div>
              <Lottie animationData={ecommerceOutlookAnimation}/>
      
            </div>
            </div>
 
-      <div className="login-form w-1/2   flex flex-col  justify-center items-center ">
+      <div className="login-form w-full h-screen  md:w-1/2    flex flex-col  justify-center items-center ">
         {/*Title*/}
         <div className=" w-fit  flex flex-col gap-2.5 ">
-          <p className="text-6xl font-bold mt-3 ">Mern Shop</p>
+          <p className="text-5xl md:text-6xl font-bold mt-3 ">Mern Shop</p>
           <p className="text-[1rem] text-zinc-700 flex justify-end ">
             - Shop Anything
           </p>
@@ -130,7 +130,7 @@ export function Register() {
 
         {/*Login Form*/}
         <div className="flex flex-col items-center">
-          <form className=" p-5 flex flex-col gap-4" onSubmit={handleSubmit}>
+          <form className=" p-5 w-[350px] md:w-[450px] flex flex-col gap-4" onSubmit={handleSubmit}>
             <AuthInput
               type="text"
               name={"userName"}

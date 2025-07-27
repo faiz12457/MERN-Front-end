@@ -10,10 +10,10 @@ function OrderSuccess() {
     const user=useSelector(selectLoginUser)
     
   return (
-    <div className='w-full h-screen grid place-content-center'>
+    <div className='w-full mt-5 sm:mt-0 h-screen grid place-content-center'>
     <div 
      style={{boxShadow:"rgba(0, 0, 0, 0.16) 0px 1px 4px"}}
-    className='  w-[737px] rounded h-[379px] p-10 flex flex-col gap-3'>
+    className=' w-[350px]  h-fit md:w-[737px] rounded md:h-[379px] p-10 flex flex-col gap-3'>
 
     <div className='w-40 h-40 flex justify-center items-center  mx-auto'>
     <DotLottieReact

@@ -19,7 +19,7 @@ function AuthButton({ title, isSubmitting, className="" }) {
         backgroundColor: "#18181b",
         transition: "backgroundColor 0.2s ease-in-out",
       }}
-      className={`w-[420px] disabled:opacity-70 disabled:cursor-not-allowed h-10 relative 
+      className={`disabled:opacity-70 disabled:cursor-not-allowed h-10 relative 
       rounded-sm cursor-pointer font-medium text-center text-white ${className}`}
     >
       {title}

@@ -80,9 +80,9 @@ function Navbar() {
         }}
         className="w-full h-16  bg-white z-50 fixed top-0"
       >
-        <div className="w-[70%]   cursor-pointer mx-auto h-full flex items-center justify-between ">
+        <div className=" w-fit md:w-[70%]    cursor-pointer mx-auto h-full flex items-center justify-center md:justify-between ">
           <NavLink to={"/"}>
-            <p className="text-xl text-black     tracking-widest font-bold">
+            <p className=" hidden md:block text-xl text-black     tracking-widest font-bold">
               MERN SHOP
             </p>
           </NavLink>

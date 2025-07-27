@@ -38,7 +38,7 @@ function ProductDetailPage() {
   return (
     <>
     <div className="mt-24  w-full   ">
-      <div className="w-[80%] mx-auto h-full  box-border flex ">
+      <div className=" w-fit  md:w-[80%] gap-3.5 mx-auto h-full items-center flex-col md:flex-row  box-border flex ">
         <ProductImgSec productImg={product?.images[0]} />
 
         <ProductDetail product={product} />

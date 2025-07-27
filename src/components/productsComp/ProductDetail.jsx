@@ -69,7 +69,7 @@ const reviews=useSelector(selectReviews);
     }
   }
   return (
-    <div className="w-[50%]  flex justify-center ">
+    <div className="w-[350px] px-3 sm:px-0  md:w-[50%]   flex justify-center ">
       <div className="flex flex-col gap-5">
         <ProductInfo
           name={name}
@@ -97,7 +97,7 @@ export default ProductDetail;
 
 function DeliveryInfo() {
   return (
-    <div className="w-[400px] h-[164px] border border-zinc-700 rounded">
+    <div className="w-full  h-[164px] border border-zinc-700 rounded">
       <div className="flex  h-20  items-center gap-4 pl-4 ">
         <div className="grid place-content-center">
           <FaTruck size={22} />
@@ -172,7 +172,7 @@ const user=useSelector(selectLoginUser);
   }
    
   return (
-    <div className="w-[340px]   flex flex-col gap-5">
+    <div className="  flex flex-col gap-5">
       <ProductColors colors={colors} handleColor={handleColor} />
       <ProductSizes sizes={sizes} handleSize={handleSize} />
       <ProductCartButton
@@ -353,8 +353,8 @@ function ProductInfo({
   const totalReviews=reviews?.length;
   const averageRating=Math.ceil(totalReviewRating/totalReviews)
   return (
-    <div className="info-product flex flex-col  gap-1 w-[400px] ">
-      <p className="text-3xl font-bold ">{name}</p>
+    <div className="info-product flex flex-col  gap-1  ">
+      <p className=" text-xl sm:text-2xl md:text-3xl font-bold ">{name}</p>
 
       <div className="flex items-center gap-2">
         <div className="flex gap-0.5">
@@ -379,7 +379,7 @@ function ProductInfo({
         ${discountPrice.toFixed(0)}
       </p>
 
-      <p className="text-zinc-900">{description}</p>
+      <p className="text-zinc-900 text-[.9rem] font-medium  sm:text-base">{description}</p>
       <hr className="border-zinc-400 shadow-sm my-2" />
     </div>
   );

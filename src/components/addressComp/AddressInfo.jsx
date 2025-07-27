@@ -9,10 +9,10 @@ function AddressInfo({setEditAddress,handleAddressDelete}) {
    
   return (
     <div className=''>
-        <div className='w-full h-10 rounded  bg-black text-zinc-300 font-medium flex items-center uppercase text-[1rem] pl-1'>Home</div>
+        <div className='px-5 w-full h-10 rounded   bg-black text-zinc-300 font-medium flex items-center uppercase text-[1rem] pl-1'>Home</div>
 
 
-        <div className='pl-5 text-zinc-600 text-xl flex flex-col gap-1.5 mt-2.5'>
+        <div className='pl-5 text-zinc-600  text-base md:text-xl flex flex-col gap-1.5 mt-2.5'>
             <p>Street - {address?.street}</p>
             <p>Postal Code - {address?.postalCode}</p>
             <p>Country - {address?.country}</p>
