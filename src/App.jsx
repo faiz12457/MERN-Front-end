@@ -108,11 +108,7 @@ function App() {
                 path: "/admin/addProduct",
                 element: <ProtectedRoute Component={<CreateProduct />} />,
               },
-              {
-                path: "/admin/profile",
-                element: <ProtectedRoute Component={<CreateProduct />} />,
-              },
-
+              
               {
                 path: "/admin/orders",
                 element: <ProtectedRoute Component={<AdminOrders />} />,
@@ -121,6 +117,11 @@ function App() {
               {
                 path: "/admin/updateProduct/:id",
                 element: <ProtectedRoute Component={<UpdateProducts />} />,
+              },
+
+               {
+                path: "/admin/profile",
+                element: <ProtectedRoute Component={<Profile />} />,
               },
             ],
       },
