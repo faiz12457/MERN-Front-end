@@ -22,7 +22,7 @@ function ProfileMenu({ setIsOpen, menuRef, openMenu }) {
       name: loginUser?.isAdmin ? "Orders" : "My orders",
       to: loginUser?.isAdmin ? "/admin/orders" : "/orders",
     },
-    { name: "Logout", to: "/logout" },
+    { name: "Logout", to:undefined },
   ];
 
   if (loginUser?.isAdmin) {

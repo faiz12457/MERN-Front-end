@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect,  useState } from "react";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { Input } from "./Input";
 import { Title } from "./Title";
@@ -6,12 +6,10 @@ import PayButton from "./PayButton";
 import { motion } from "framer-motion";
 import Payment from "./Payment";
 import { useFormik } from "formik";
-import Loader from "../../../loaders/Loader";
 import { userSelectors } from "../../../redux-store/slices/user/userSlice";
 import {
   addressSelectors,
   fetchUserAddress,
-  resetAddressStatus,
 } from "../../../redux-store/slices/address/addressSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,10 +28,9 @@ import { selectLoginStatus, selectLoginUser } from "../../../redux-store/slices/
 
 function OrderContact() {
   const dispatch = useDispatch();
-  const { selectUser, selectUserStatus } = userSelectors;
   const { selectUserAddress, selectAddressStatus } = addressSelectors;
   const user=useSelector(selectLoginUser);
-  const userStatus = useSelector(selectLoginStatus);
+  
   const address = useSelector(selectUserAddress);
   const addressStatus = useSelector(selectAddressStatus);
   const { _id: userId } = user || {};

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { motion, useAnimationControls } from "framer-motion";
+import { motion} from "framer-motion";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { cartSelectors } from '../../redux-store/slices/cart/cartSlice';
 import { useSelector } from 'react-redux';

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { motion} from "framer-motion";
 import { useFormik } from 'formik';
 import { registerAddressSchema } from '../../yupSchema/schema';
