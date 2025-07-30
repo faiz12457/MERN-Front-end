@@ -225,7 +225,7 @@ function OrderContact() {
 
             <FormFieldWrapper className="col-span-1">
               <Input
-                placeholder="Postal Code (optional)"
+                placeholder="Postal Code"
                 type="text"
                 name={"postalCode"}
                 value={postalCode}

@@ -6,6 +6,4 @@ export const colorMap = {
     "Rose Gold": "#b76e79",  
     "Lavender Blush": "#FFF0F5",
     "White Gold":"#E5E4E2",
-
-
   };

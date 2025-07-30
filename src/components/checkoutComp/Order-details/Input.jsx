@@ -23,7 +23,7 @@ export function Input({
         focus:ring-2 focus:ring-blue-500  `}
       />
       <label
-        htmlFor="firstName"
+        htmlFor={name}
         className="absolute left-3 top-1 pointer-events-none
    text-gray-600 text-xs transition-all peer-placeholder-shown:top-4 
    peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:top-1

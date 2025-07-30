@@ -90,7 +90,7 @@ function OrderItems() {
         className="w-[90%] overflow-hidden  px-6 flex flex-col gap-4"
       >
         <div className="py-3">
-          <div className="flex flex-col mb-2 gap-4 h-[300px] overflow-y-auto px-1.5">
+          <div className="flex py-3 flex-col mb-2 gap-4 lg:h-[300px] overflow-y-auto px-1.5">
             {items?.map((item, idx) => (
               <ItemCard key={idx} item={item} />
             ))}
