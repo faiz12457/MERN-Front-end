@@ -85,7 +85,7 @@ export function PaymentIcons({ size = 17, gap = 8 }) {
   const style = { display: 'flex', alignItems: 'center', gap: `${gap}px` };
 
   return (
-    <div style={style} className='ml-auto'>
+    <div  className='ml-auto hidden border sm:flex sm:items-center gap-2 '>
       {/* Visa (dark grey) */}
        <img  src='./visa.svg' />
        <img  src='./master.svg' />

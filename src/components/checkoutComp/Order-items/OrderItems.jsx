@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CheckOutSubtotal from './CheckOut-Subtotal'
 import ItemCard from './ItemCard'
 import { useDispatch, useSelector } from 'react-redux';
 import { cartSelectors, resetDeleteCartStatus } from '../../../redux-store/slices/cart/cartSlice';
 import { Slide, toast } from 'react-toastify';
+import { motion } from 'framer-motion';
+import { IoIosArrowDown } from "react-icons/io";
 
 function OrderItems() {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ function OrderItems() {
   const getStatus=useSelector(selectCartGetStatus);
   const { selectCartItems } = cartSelectors;
   const items = useSelector(selectCartItems);
+  const [show,setShow]=useState(false)
 
   useEffect(()=>{
     if(deleteStatus==="succeed"){
@@ -33,20 +36,32 @@ function OrderItems() {
 
   },[deleteStatus])
   return (
-    <div className='h-[600px] bg-[#F5F5F5] border justify-start  border-l-zinc-300 border-b-0 border-t-0 border-r-0 col-span-1 sticky top-0 pt-[60px]'>
-    <div className='w-[90%] px-6 flex flex-col gap-4 '>
-    <div className='flex flex-col gap-4 h-[300px] overflow-y-auto pt-3 px-1.5'>
-    {
-      items?.map((item,idx)=> <ItemCard key={idx} item={item} />)
-    }
-   
-     
-     
+    <div className='order-1 lg:order-2 bg-[#F5F5F5] border flex flex-col 
+    items-center  lg:justify-start 
+     border-l-zinc-300 border-b-zinc-300 border-t-0
+   border-r-0 col-span-1 lg:sticky lg:top-0 lg:pt-[60px] lg:h-[600px]'>
+    <div onClick={()=>setShow(!show)} className='h-16  w-[90%] lg:hidden border
+     border-t-transparent border-r-transparent
+      border-b-transparent border-l-transparent cursor-pointer font-medium flex items-center gap-1.5'>Order Summary
+
+        <motion.span initial={false} animate={{rotate: show ?180:0}}   transition={{ duration: 0.3 }}><IoIosArrowDown /> </motion.span>
+      </div>
+   <motion.div
+  initial={false}
+  animate={{ height: show ? 'auto' : 0 }}
+  transition={{ duration: 0.3 }}
+  className='w-[90%] overflow-hidden  px-6 flex flex-col gap-4'>
+  
+  <div className="py-3">
+    <div className='flex flex-col mb-2 gap-4 h-[300px] overflow-y-auto px-1.5'>
+      {items?.map((item, idx) => <ItemCard key={idx} item={item} />)}
     </div>
 
-    <hr></hr>
+    <hr className='mb-3' />
     <CheckOutSubtotal />
-    </div>
+  </div>
+</motion.div>
+
     </div>
   )
 }

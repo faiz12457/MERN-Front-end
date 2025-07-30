@@ -35,7 +35,8 @@ function Checkout() {
     } 
   
   return (
-    <div className='mt-20 border border-t-zinc-300 border-b-0 border-l-0 border-r-0  w-full  box-border gap-1 relative grid grid-cols-2'>
+    <div className='mt-20 border border-t-zinc-300
+     border-b-0 border-l-0 border-r-0  w-full  box-border gap-1  relative grid  grid-cols-1 lg:grid-cols-2'>
 
      <OrderDetails />
      <OrderItems />

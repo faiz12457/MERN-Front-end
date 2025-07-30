@@ -3,7 +3,7 @@ import OrderContact from './OrderContact'
 
 function OrderDetails() {
   return (
-    <div className='  h-full bg-white  flex justify-end'>
+    <div className='  h-full order-2 lg:order-1  bg-white  flex justify-end'>
         <OrderContact />
     </div>
   )
