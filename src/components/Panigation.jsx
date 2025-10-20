@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import React from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 function Panigation({ currentPage, setCurrPage, totalPages = 11 }) {
-  function goToPage(page) {
-    if (currentPage >= 1 && currentPage <= totalPages) {
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
       setCurrPage(page);
     }
-  }
+  };
 
-  function getPagination() {
+  const getPagination = () => {
     const pages = [];
     if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
@@ -39,47 +38,48 @@ function Panigation({ currentPage, setCurrPage, totalPages = 11 }) {
       );
     }
     return pages;
-  }
+  };
 
   return (
-    <div className="flex mt-7 justify-end w-[90%]  mx-auto ">
-      <div className="flex gap-2">
-        <button
-          onClick={() => goToPage(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="disabled:opacity-50 cursor-pointer flex justify-center items-center w-11 h-10 border-[1px] border-zinc-400 rounded-sm"
-        >
-          <IoIosArrowBack size={22} />
-        </button>
+    <div className="mt-7 w-full px-4">
+      <div className="flex justify-center sm:justify-end">
+        <div className="flex gap-2 overflow-x-auto max-w-full px-1 py-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="disabled:opacity-50 cursor-pointer flex justify-center items-center min-w-[40px] h-10 border border-zinc-400 rounded-sm"
+          >
+            <IoIosArrowBack size={20} />
+          </button>
 
-        {getPagination().map((page, index) => {
-          return (
+          {getPagination().map((page, index) => (
             <button
-              onClick={() => typeof page === "number" && goToPage(page)}
               key={index}
+              onClick={() => typeof page === "number" && goToPage(page)}
               disabled={page === "..."}
-              className={`w-11 h-10
-                  border-zinc-400
-                  ${currentPage === page && "bg-zinc-300"}
-                   cursor-pointer border-[1px]
-                    rounded-sm ${
-                      page === "..."
-                        ? "bg-white cursor-default   border-none"
-                        : ""
-                    }`}
+              className={`min-w-[40px] h-10 rounded-sm text-sm border 
+                ${
+                  currentPage === page
+                    ? "bg-zinc-300 border-zinc-400"
+                    : "border-zinc-300"
+                } ${
+                page === "..."
+                  ? "bg-transparent cursor-default border-none"
+                  : "cursor-pointer"
+              }`}
             >
               {page}
             </button>
-          );
-        })}
+          ))}
 
-        <button
-          onClick={() => goToPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="disabled:opacity-50 border-[1px] border-zinc-400  cursor-pointer flex justify-center items-center w-11 h-10  rounded-sm"
-        >
-          <IoIosArrowForward size={22} />
-        </button>
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="disabled:opacity-50 cursor-pointer flex justify-center items-center min-w-[40px] h-10 border border-zinc-400 rounded-sm"
+          >
+            <IoIosArrowForward size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );

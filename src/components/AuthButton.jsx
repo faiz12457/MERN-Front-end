@@ -12,6 +12,8 @@ function AuthButton({ title, isSubmitting, className="" }) {
         transition: {
           duration: 0.3,
           ease: "easeInOut",
+        
+          
         },
       }}
       whileTap={{ scale: 1 }}

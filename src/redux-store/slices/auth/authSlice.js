@@ -29,7 +29,7 @@ const initialState = {
   verifyOtpError: null,
 };
 
-export const loginThunk = createAsyncThunk("/auth.login", async (values) => {
+export const loginThunk = createAsyncThunk("/auth/login", async (values) => {
   const res = await loginUser(values);
   return res;
 });
